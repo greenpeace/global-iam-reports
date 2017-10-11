@@ -1,0 +1,3453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.5.0.v201506092134 Build &lt;@BUILD@></property>
+    <simple-property-list name="includeResource">
+        <value>resources/AuditReport</value>
+        <value>resources/AuditReport_ru</value>
+    </simple-property-list>
+    <property name="units">in</property>
+    <property name="width">14.5in</property>
+    <property name="iconFile">/templates/grouped_listing.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="ACTION_ID" id="45">
+            <text-property name="helpText" key="parameter.actions.propmpt">Please set action</text-property>
+            <text-property name="promptText" key="parameter.actions">Action Type</text-property>
+            <property name="valueType">dynamic</property>
+            <property name="isRequired">false</property>
+            <property name="dataSetName">dataSetParamAction</property>
+            <expression name="valueExpr" type="javascript">dataSetRow["NAME"]</expression>
+            <expression name="labelExpr" type="javascript">dataSetRow["NAME"]</expression>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">list-box</property>
+            <property name="mustMatch">true</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ACTION_DATETIME_START" id="246">
+            <text-property name="helpText" key="parameter.start.date.propmpt">Please set start period</text-property>
+            <text-property name="promptText" key="parameter.start.date">Start Date</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript">var d = new Date(new Date().setMonth(new Date().getMonth()-1)); var m = (d.getMonth()&lt;9?'0':'')+(d.getMonth()+1); d.getFullYear()+'-'+ m +'-'+d.getDate()</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ACTION_DATETIME_END" id="247">
+            <text-property name="helpText" key="parameter.last.date.propmpt">Please set end period</text-property>
+            <text-property name="promptText" key="parameter.last.date">Last Date</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="javascript"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="USER_ID" id="729">
+            <text-property name="helpText" key="parameter.user.id.propmpt">Please set user</text-property>
+            <text-property name="promptText" key="parameter.user.id">User</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ORG_ID" id="885">
+            <text-property name="helpText">Please enter the organization Id</text-property>
+            <text-property name="promptText">Organization Id</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant"></value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.ws" name="Data Source" id="255">
+            <method name="beforeOpen"><![CDATA[//var myresourcefolder = reportContext.getDesignHandle().getResourceFolder();
+var reportFolderAndReportName = reportContext.getReportRunnable().getReportName();
+var myresourcefolder = reportFolderAndReportName.substr(0,reportFolderAndReportName.lastIndexOf('/')) 
+this.setExtensionProperty("OdaConnProfileStorePath", myresourcefolder + "/configuration.cps");
+reportContext.getDesignHandle().findDataSource("Data Source").setProperty("connectionTimeOut", "300000");]]></method>
+            <property name="wsdlURI">http://localhost:9080/openiam-esb/idmsrvc/ReportWebService?wsdl</property>
+            <property name="OdaConnProfileName">Data Source</property>
+            <property name="OdaConnProfileStorePath">configuration.cps</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.ws.dataSet" name="dataSetRow" id="256">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">LOG_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">LOG_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ACTION</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">ACTION</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ACTION_STATUS</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">ACTION_STATUS</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ACTION_DATETIME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">ACTION_DATETIME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">USER_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">USER_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">LOGIN_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">LOGIN_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">TARGET1</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">TARGET1</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">TARGET2</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">TARGET2</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DESCRIPTION</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">DESCRIPTION</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CLIENT_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">CLIENT_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">TARGET_SYSTEM_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">TARGET_SYSTEM_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SESSION_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">SESSION_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">WARNING</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">WARNING</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DEPT_NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">DEPT_NAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">REQ_FULLNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">REQ_FULLNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">PARENT_ACTION_ID</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">PARENT_ACTION_ID</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">TARGET_SYSTEM_NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">TARGET_SYSTEM_NAME</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">ACTION_ID</property>
+                    <property name="paramName">ACTION_ID</property>
+                    <property name="nativeName">ACTION_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">valuesToXml("ACTION_ID")</expression>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">ACTION_DATETIME_START</property>
+                    <property name="paramName">ACTION_DATETIME_START</property>
+                    <property name="nativeName">ACTION_DATETIME_START</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">2</property>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">ACTION_DATETIME_END</property>
+                    <property name="paramName">ACTION_DATETIME_END</property>
+                    <property name="nativeName">ACTION_DATETIME_END</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">3</property>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">USER_ID</property>
+                    <property name="paramName">USER_ID</property>
+                    <property name="nativeName">USER_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">4</property>
+                    <expression name="defaultValue" type="javascript">""</expression>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">ORG_ID</property>
+                    <property name="paramName">ORG_ID</property>
+                    <property name="nativeName">ORG_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">5</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">LOG_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">ACTION</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">ACTION_STATUS</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">ACTION_DATETIME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">USER_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">LOGIN_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">TARGET1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">CLIENT_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">TARGET_SYSTEM_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">SESSION_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">WARNING</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">DEPT_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">REQ_FULLNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">PARENT_ACTION_ID</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">TARGET_SYSTEM_NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">DESCRIPTION</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">TARGET2</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="rowFetchLimit">0</property>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">LOG_ID</property>
+                    <property name="nativeName">LOG_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">ACTION</property>
+                    <property name="nativeName">ACTION</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">ACTION_STATUS</property>
+                    <property name="nativeName">ACTION_STATUS</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">ACTION_DATETIME</property>
+                    <property name="nativeName">ACTION_DATETIME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">USER_ID</property>
+                    <property name="nativeName">USER_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">LOGIN_ID</property>
+                    <property name="nativeName">LOGIN_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">TARGET1</property>
+                    <property name="nativeName">TARGET1</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">CLIENT_ID</property>
+                    <property name="nativeName">CLIENT_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">TARGET_SYSTEM_ID</property>
+                    <property name="nativeName">TARGET_SYSTEM_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">SESSION_ID</property>
+                    <property name="nativeName">SESSION_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">WARNING</property>
+                    <property name="nativeName">WARNING</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">DEPT_NAME</property>
+                    <property name="nativeName">DEPT_NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">REQ_FULLNAME</property>
+                    <property name="nativeName">REQ_FULLNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">PARENT_ACTION_ID</property>
+                    <property name="nativeName">PARENT_ACTION_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">TARGET_SYSTEM_NAME</property>
+                    <property name="nativeName">TARGET_SYSTEM_NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">DESCRIPTION</property>
+                    <property name="nativeName">DESCRIPTION</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">TARGET2</property>
+                    <property name="nativeName">TARGET2</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[<?xml version="1.0"?>
+<SOAP-ENV:Envelope
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+	<SOAP-ENV:Body>
+		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
+		 <reportQuery>
+		 <reportName>GROUP_AUDIT_REPORT</reportName>
+         <queryParams>
+            <entry key="ACTION_ID">
+               <value>&amp;?ACTION_ID?&amp;</value>
+            </entry>
+            <entry key="ACTION_DATETIME_START">
+               <value>&amp;?ACTION_DATETIME_START?&amp;</value>
+            </entry>
+            <entry key="ACTION_DATETIME_END">
+               <value>&amp;?ACTION_DATETIME_END?&amp;</value>
+            </entry>
+            <entry key="USER_ID">
+               <value>&amp;?USER_ID?&amp;</value>
+            </entry>
+            <entry key="ORG_ID">
+               <value>&amp;?ORG_ID?&amp;</value>
+            </entry>
+            <entry key="TABLE">
+               <value>MAIN</value>
+            </entry>            
+          </queryParams>
+          </reportQuery>
+		</m:executeQuery>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LOG_ID</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LOG_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_TYPE_ID</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_TYPE_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_ID</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_ID</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_STATUS</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_STATUS</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REASON</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REASON</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REASON_DETAIL</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REASON_DETAIL</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_DATETIME</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_DATETIME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_NAME</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>RESOURCE_NAME</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>RESOURCE_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>USER_ID</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>USER_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SERVICE_ID</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SERVICE_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LOGIN_ID</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LOGIN_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET1</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET1</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLIENT_ID</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLIENT_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LINKED_LOG_ID</design:name>
+              <design:position>17</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LINKED_LOG_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LINK_SEQUENCE</design:name>
+              <design:position>18</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LINK_SEQUENCE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ORIG_OBJECT_STATE</design:name>
+              <design:position>19</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ORIG_OBJECT_STATE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NEW_OBJECT_STATE</design:name>
+              <design:position>20</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NEW_OBJECT_STATE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SRC_SYSTEM_ID</design:name>
+              <design:position>21</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SRC_SYSTEM_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET_SYSTEM_ID</design:name>
+              <design:position>22</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET_SYSTEM_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REQUEST_ID</design:name>
+              <design:position>23</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REQUEST_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SESSION_ID</design:name>
+              <design:position>24</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SESSION_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUSTOM_ATTRNAME1</design:name>
+              <design:position>25</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUSTOM_ATTRNAME1</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUSTOM_ATTRNAME2</design:name>
+              <design:position>26</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUSTOM_ATTRNAME2</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>FIRST_NAME</design:name>
+              <design:position>27</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>FIRST_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>MIDDLE_INIT</design:name>
+              <design:position>28</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>MIDDLE_INIT</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LAST_NAME</design:name>
+              <design:position>29</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LAST_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DEPT_CD</design:name>
+              <design:position>30</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DEPT_CD</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DEPT_NAME</design:name>
+              <design:position>31</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DEPT_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET2</design:name>
+              <design:position>32</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET2</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>xmlQueryText</name>
+                    <value>table0#-TNAME-#table0#:#[/soap:Envelope/soap:Body/ns2:executeQueryResponse/return/ReportData/ns2:reportTable[@name='AuditReportTable']/row]#:#{LOG_ID;STRING;/column[@name='LOG_ID']/value},{ACTION;STRING;/column[@name='ACTION']/value},{ACTION_STATUS;STRING;/column[@name='ACTION_STATUS']/value},{ACTION_DATETIME;STRING;/column[@name='ACTION_DATETIME']/value},{USER_ID;STRING;/column[@name='REQ_USER_ID']/value},{LOGIN_ID;STRING;/column[@name='LOGIN_ID']/value},{TARGET1;STRING;/column[@name='TARGET1']/value},{TARGET2;STRING;/column[@name='TARGET2']/value},{DESCRIPTION;STRING;/column[@name='DESCRIPTION']/value},{CLIENT_ID;STRING;/column[@name='CLIENT_ID']/value},{TARGET_SYSTEM_ID;STRING;/column[@name='TARGET_SYSTEM_ID']/value},{SESSION_ID;STRING;/column[@name='SESSION_ID']/value},{WARNING;STRING;/column[@name='WARNING']/value},{DEPT_NAME;STRING;/column[@name='DEPT_NAME']/value},{REQ_FULLNAME;STRING;/column[@name='REQ_FULLNAME']/value},{PARENT_ACTION_ID;STRING;/column[@name='PARENT_ACTION_ID']/value},{TARGET_SYSTEM_NAME;STRING;/column[@name='TARGET_SYSTEM_NAME']/value}#:#&lt;"ns2","urn:idm.openiam.org%srvc%report%service";"soap","http:%%schemas.xmlsoap.org%soap%envelope%"></value>
+                </ex-property>
+                <ex-property>
+                    <name>operationTrace</name>
+                    <value>ReportWebService$-$ReportWebServicePort$-$executeQuery</value>
+                </ex-property>
+                <ex-property>
+                    <name>xmlFileURI</name>
+                    <value>D:\data\openiam\upload\report\samples\details-term.xml</value>
+                </ex-property>
+                <ex-property>
+                    <name>xsdFileURI</name>
+                </ex-property>
+                <ex-property>
+                    <name>ResponseSchema</name>
+                    <value>FromWSServer</value>
+                </ex-property>
+                <ex-property>
+                    <name>useSoapEndPoint</name>
+                    <value>false</value>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.ws.dataSet" name="dataSetParamAction" id="780">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">NAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">NAME</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">NAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">NAME</property>
+                    <property name="nativeName">NAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[<?xml version="1.0"?>
+<SOAP-ENV:Envelope
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+	<SOAP-ENV:Body>
+		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
+		 <reportQuery>
+		 <reportName>GROUP_AUDIT_REPORT</reportName>
+         <queryParams>
+            <entry key="GET_VALUES">
+               <value>ACTION</value>
+            </entry>
+          </queryParams>
+          </reportQuery>
+		</m:executeQuery>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LOG_ID</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LOG_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_TYPE_ID</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_TYPE_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_ID</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_ID</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_STATUS</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_STATUS</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REASON</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REASON</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REASON_DETAIL</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REASON_DETAIL</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_DATETIME</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_DATETIME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_NAME</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>RESOURCE_NAME</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>RESOURCE_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>USER_ID</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>USER_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SERVICE_ID</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SERVICE_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LOGIN_ID</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LOGIN_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET1</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET1</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLIENT_ID</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLIENT_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LINKED_LOG_ID</design:name>
+              <design:position>17</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LINKED_LOG_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LINK_SEQUENCE</design:name>
+              <design:position>18</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LINK_SEQUENCE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ORIG_OBJECT_STATE</design:name>
+              <design:position>19</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ORIG_OBJECT_STATE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NEW_OBJECT_STATE</design:name>
+              <design:position>20</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NEW_OBJECT_STATE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SRC_SYSTEM_ID</design:name>
+              <design:position>21</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SRC_SYSTEM_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET_SYSTEM_ID</design:name>
+              <design:position>22</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET_SYSTEM_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REQUEST_ID</design:name>
+              <design:position>23</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REQUEST_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SESSION_ID</design:name>
+              <design:position>24</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SESSION_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUSTOM_ATTRNAME1</design:name>
+              <design:position>25</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUSTOM_ATTRNAME1</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUSTOM_ATTRNAME2</design:name>
+              <design:position>26</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUSTOM_ATTRNAME2</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>FIRST_NAME</design:name>
+              <design:position>27</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>FIRST_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>MIDDLE_INIT</design:name>
+              <design:position>28</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>MIDDLE_INIT</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LAST_NAME</design:name>
+              <design:position>29</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LAST_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DEPT_CD</design:name>
+              <design:position>30</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DEPT_CD</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DEPT_NAME</design:name>
+              <design:position>31</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DEPT_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET2</design:name>
+              <design:position>32</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET2</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>xmlQueryText</name>
+                    <value>table0#-TNAME-#table0#:#[/soap:Envelope/soap:Body/ns2:executeQueryResponse/return/ReportData/ns2:reportTable[@name='values']/row]#:#{NAME;STRING;/column[@name="NAME"]/value}#:#&lt;"ns2","urn:idm.openiam.org%srvc%report%service";"soap","http:%%schemas.xmlsoap.org%soap%envelope%"></value>
+                </ex-property>
+                <ex-property>
+                    <name>operationTrace</name>
+                    <value>ReportWebService$-$ReportWebServicePort$-$executeQuery</value>
+                </ex-property>
+                <ex-property>
+                    <name>xmlFileURI</name>
+                </ex-property>
+                <ex-property>
+                    <name>xsdFileURI</name>
+                </ex-property>
+                <ex-property>
+                    <name>ResponseSchema</name>
+                    <value>FromWSServer</value>
+                </ex-property>
+                <ex-property>
+                    <name>useSoapEndPoint</name>
+                    <value>true</value>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.ws.dataSet" name="Data Set Head" id="883">
+            <property name="nullsOrdering">nulls lowest</property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">USER_FULLNAME</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">USER_FULLNAME</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">ORGANIZATION</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">ORGANIZATION</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">USER_ID</property>
+                    <property name="paramName">USER_ID</property>
+                    <property name="nativeName">USER_ID</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">1</property>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+                <structure>
+                    <property name="name">ORG_ID</property>
+                    <property name="paramName">ORG_ID</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                    <property name="position">2</property>
+                    <property name="isOptional">false</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">USER_FULLNAME</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">ORGANIZATION</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">USER_FULLNAME</property>
+                    <property name="nativeName">USER_FULLNAME</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">ORGANIZATION</property>
+                    <property name="nativeName">ORGANIZATION</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[<?xml version="1.0"?>
+<SOAP-ENV:Envelope
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+	<SOAP-ENV:Body>
+		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
+		 <reportQuery>
+		 <reportName>GROUP_AUDIT_REPORT</reportName>
+         <queryParams>
+            <entry key="USER_ID">
+               <value>&amp;?USER_ID?&amp;</value>
+            </entry>
+            <entry key="ORG_ID">
+               <value>&amp;?ORG_ID?&amp;</value>
+            </entry>
+            <entry key="TABLE">
+               <value>HEAD</value>
+            </entry>
+          </queryParams>
+          </reportQuery>
+		</m:executeQuery>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <DataSetParameters>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name>USER_ID</design:name>
+            <design:position>1</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+          <design:precision>-1</design:precision>
+          <design:scale>-1</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+        <design:inputAttributes>
+          <design:elementAttributes>
+            <design:defaultValues>
+              <design:values xsi:nil="true"/>
+            </design:defaultValues>
+          </design:elementAttributes>
+        </design:inputAttributes>
+      </design:ParameterDefinition>
+    </parameter>
+  </DataSetParameters>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LOG_ID</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LOG_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_TYPE_ID</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_TYPE_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_ID</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_ID</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_STATUS</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_STATUS</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REASON</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REASON</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REASON_DETAIL</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REASON_DETAIL</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ACTION_DATETIME</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ACTION_DATETIME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>OBJECT_NAME</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>OBJECT_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>RESOURCE_NAME</design:name>
+              <design:position>10</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>RESOURCE_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>USER_ID</design:name>
+              <design:position>11</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>USER_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SERVICE_ID</design:name>
+              <design:position>12</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SERVICE_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LOGIN_ID</design:name>
+              <design:position>13</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LOGIN_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET1</design:name>
+              <design:position>14</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET1</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CLIENT_ID</design:name>
+              <design:position>15</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CLIENT_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LINKED_LOG_ID</design:name>
+              <design:position>17</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LINKED_LOG_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LINK_SEQUENCE</design:name>
+              <design:position>18</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LINK_SEQUENCE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>ORIG_OBJECT_STATE</design:name>
+              <design:position>19</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>ORIG_OBJECT_STATE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NEW_OBJECT_STATE</design:name>
+              <design:position>20</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NEW_OBJECT_STATE</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SRC_SYSTEM_ID</design:name>
+              <design:position>21</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SRC_SYSTEM_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET_SYSTEM_ID</design:name>
+              <design:position>22</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET_SYSTEM_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>REQUEST_ID</design:name>
+              <design:position>23</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>REQUEST_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SESSION_ID</design:name>
+              <design:position>24</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SESSION_ID</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUSTOM_ATTRNAME1</design:name>
+              <design:position>25</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUSTOM_ATTRNAME1</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUSTOM_ATTRNAME2</design:name>
+              <design:position>26</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUSTOM_ATTRNAME2</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>FIRST_NAME</design:name>
+              <design:position>27</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>FIRST_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>MIDDLE_INIT</design:name>
+              <design:position>28</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>MIDDLE_INIT</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LAST_NAME</design:name>
+              <design:position>29</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LAST_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DEPT_CD</design:name>
+              <design:position>30</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DEPT_CD</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DEPT_NAME</design:name>
+              <design:position>31</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DEPT_NAME</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TARGET2</design:name>
+              <design:position>32</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TARGET2</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+    <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DESCRIPTION</design:name>
+              <design:position>32</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DESCRIPTION</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>xmlQueryText</name>
+                    <value>table0#-TNAME-#table0#:#[/soap:Envelope/soap:Body/ns2:executeQueryResponse/return/ReportData/ns2:reportTable[@name='head']/row]#:#{USER_FULLNAME;STRING;/column[@name="USER_FULLNAME"]/value},{ORGANIZATION;STRING;/column[@name="ORGANIZATION"]/value}#:#&lt;"ns2","urn:idm.openiam.org%srvc%report%service";"soap","http:%%schemas.xmlsoap.org%soap%envelope%"></value>
+                </ex-property>
+                <ex-property>
+                    <name>operationTrace</name>
+                    <value>ReportWebService$-$ReportWebServicePort$-$executeQuery</value>
+                </ex-property>
+                <ex-property>
+                    <name>xmlFileURI</name>
+                </ex-property>
+                <ex-property>
+                    <name>xsdFileURI</name>
+                </ex-property>
+                <ex-property>
+                    <name>ResponseSchema</name>
+                    <value>FromWSServer</value>
+                </ex-property>
+                <ex-property>
+                    <name>useSoapEndPoint</name>
+                    <value>true</value>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">"Arial"</property>
+            <property name="fontSize">9pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="hyperlink" id="816">
+            <property name="fontFamily">"Arial"</property>
+            <property name="textUnderline">underline</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">landscape</property>
+            <property name="topMargin">0.2in</property>
+            <property name="leftMargin">0.2in</property>
+            <property name="bottomMargin">0.2in</property>
+            <property name="rightMargin">0.2in</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="331">
+            <property name="marginBottom">10pt</property>
+            <property name="canShrink">true</property>
+            <property name="width">100%</property>
+            <property name="dataSet">Data Set Head</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">USER_FULLNAME</property>
+                    <text-property name="displayName">USER_FULLNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["USER_FULLNAME"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">ORGANIZATION</property>
+                    <text-property name="displayName">ORGANIZATION</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ORGANIZATION"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="332">
+                <property name="width">2.4375in</property>
+            </column>
+            <column id="333">
+                <property name="width">8.697916666666666in</property>
+            </column>
+            <row id="334">
+                <cell id="335">
+                    <property name="colSpan">1</property>
+                    <property name="rowSpan">1</property>
+                    <image id="706">
+                        <property name="height">0.833in</property>
+                        <property name="width">2.292in</property>
+                        <property name="source">embed</property>
+                        <property name="imageName">logo.png</property>
+                    </image>
+                </cell>
+                <cell id="707">
+                    <property name="textAlign">left</property>
+                    <label id="82">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">14pt</property>
+                        <property name="fontWeight">normal</property>
+                        <property name="textUnderline">none</property>
+                        <property name="marginTop">0pt</property>
+                        <property name="paddingTop">20pt</property>
+                        <property name="paddingBottom">5pt</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text" key="report.title">OpenIAM Audit Report</text-property>
+                    </label>
+                    <grid id="846">
+                        <property name="marginLeft">20pt</property>
+                        <property name="width">100%</property>
+                        <column id="847">
+                            <property name="width">15%</property>
+                        </column>
+                        <column id="848">
+                            <property name="width">85%</property>
+                        </column>
+                        <row id="877">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">!params["ACTION_DATETIME_START"].value</expression>
+                                </structure>
+                            </list-property>
+                            <cell id="878">
+                                <property name="colSpan">2</property>
+                                <property name="rowSpan">1</property>
+                                <property name="width">8.33in</property>
+                                <text id="882">
+                                    <property name="paddingTop">7pt</property>
+                                    <property name="paddingBottom">7pt</property>
+                                    <property name="textAlign">center</property>
+                                    <property name="whiteSpace">nowrap</property>
+                                    <property name="contentType">html</property>
+                                    <text-property name="content"><![CDATA[<VALUE-OF>new Date()</VALUE-OF>]]></text-property>
+                                </text>
+                            </cell>
+                        </row>
+                        <row id="849">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">!params["ACTION_DATETIME_START"].value</expression>
+                                </structure>
+                            </list-property>
+                            <cell id="850">
+                                <label id="844">
+                                    <property name="fontWeight">bold</property>
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text" key="parameter.start.date">Start Date</text-property>
+                                </label>
+                            </cell>
+                            <cell id="851">
+                                <data id="867">
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="textAlign">left</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">ACTION_DATETIME_START</property>
+                                            <expression name="expression" type="javascript">params["ACTION_DATETIME_START"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">ACTION_DATETIME_START</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="862">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">!params["ACTION_DATETIME_END"].value</expression>
+                                </structure>
+                            </list-property>
+                            <cell id="863">
+                                <label id="865">
+                                    <property name="fontWeight">bold</property>
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text" key="parameter.last.date">Last Date</text-property>
+                                </label>
+                            </cell>
+                            <cell id="864">
+                                <data id="868">
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="textAlign">left</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">ACTION_DATETIME_END</property>
+                                            <expression name="expression" type="javascript">params["ACTION_DATETIME_END"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">ACTION_DATETIME_END</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="852">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">!params["USER_ID"].value</expression>
+                                </structure>
+                            </list-property>
+                            <cell id="853">
+                                <label id="843">
+                                    <property name="fontWeight">bold</property>
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text" key="parameter.user">User</text-property>
+                                </label>
+                            </cell>
+                            <cell id="854">
+                                <data id="884">
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="resultSetColumn">USER_FULLNAME</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="886">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">!params["ORG_ID"].value</expression>
+                                </structure>
+                            </list-property>
+                            <cell id="887">
+                                <label id="889">
+                                    <property name="fontWeight">bold</property>
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text" key="parameter.organization">Organization</text-property>
+                                </label>
+                            </cell>
+                            <cell id="888">
+                                <data id="890">
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="resultSetColumn">ORGANIZATION</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="855">
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">all</property>
+                                    <expression name="valueExpr" type="javascript">!params["ACTION_ID"].value</expression>
+                                </structure>
+                            </list-property>
+                            <cell id="856">
+                                <label id="845">
+                                    <property name="fontWeight">bold</property>
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text" key="parameter.actions">Actions</text-property>
+                                </label>
+                            </cell>
+                            <cell id="857">
+                                <data id="870">
+                                    <property name="marginBottom">2pt</property>
+                                    <property name="textAlign">left</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">ACTION_ID</property>
+                                            <expression name="expression" type="javascript">params["ACTION_ID"]</expression>
+                                            <property name="dataType">javaObject</property>
+                                            <property name="allowExport">true</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">ACTION_ID</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <table id="19048">
+            <property name="marginTop">20pt</property>
+            <property name="width">100%</property>
+            <property name="dataSet">dataSetRow</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">WARNING</property>
+                    <text-property name="displayName">WARNING</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["WARNING"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">35</property>
+            <column id="19052">
+                <property name="width">1.40625in</property>
+            </column>
+            <detail>
+                <row id="19049">
+                    <list-property name="visibility">
+                        <structure>
+                            <property name="format">all</property>
+                            <expression name="valueExpr" type="javascript">!row["WARNING"]</expression>
+                        </structure>
+                    </list-property>
+                    <cell id="19050">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">8pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">8pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <property name="width">14.25in</property>
+                        <data id="19051">
+                            <property name="fontWeight">normal</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">WARNING</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <table id="257">
+            <property name="width">14.225in</property>
+            <property name="borderBottomColor">#CBCB97</property>
+            <property name="borderBottomWidth">4pt</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="dataSet">dataSetRow</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">LOG_ID</property>
+                    <text-property name="displayName">LOG_ID</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["LOG_ID"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">ACTION</property>
+                    <text-property name="displayName">ACTION</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ACTION"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">ACTION_STATUS</property>
+                    <text-property name="displayName">ACTION_STATUS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ACTION_STATUS"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">ACTION_DATETIME</property>
+                    <text-property name="displayName">ACTION_DATETIME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ACTION_DATETIME"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">LOGIN_ID</property>
+                    <text-property name="displayName">LOGIN_ID</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["LOGIN_ID"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">TARGET_SYSTEM_NAME</property>
+                    <text-property name="displayName">TARGET_SYSTEM_NAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["TARGET_SYSTEM_NAME"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">TARGET1</property>
+                    <text-property name="displayName">TARGET1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["TARGET1"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">TARGET2</property>
+                    <text-property name="displayName">TARGET2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["TARGET2"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">DESCRIPTION</property>
+                    <text-property name="displayName">DESCRIPTION</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["DESCRIPTION"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">WARNING</property>
+                    <text-property name="displayName">WARNING</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["WARNING"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">REQ_FULLNAME</property>
+                    <text-property name="displayName">REQ_FULLNAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["REQ_FULLNAME"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">DEPT_NAME</property>
+                    <text-property name="displayName">DEPT_NAME</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["DEPT_NAME"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">35</property>
+            <list-property name="sort">
+                <structure>
+                    <expression name="key" type="javascript">row["LOG_ID"]</expression>
+                    <property name="direction">desc</property>
+                    <property name="strength">-1</property>
+                </structure>
+            </list-property>
+            <column id="442">
+                <property name="width">1.34375in</property>
+            </column>
+            <column id="811">
+                <property name="width">1.34375in</property>
+            </column>
+            <column id="19056">
+                <property name="width">1.34375in</property>
+            </column>
+            <column id="755">
+                <property name="width">1.7708333333333333in</property>
+            </column>
+            <column id="770">
+                <property name="width">0.8854166666666666in</property>
+            </column>
+            <column id="19064">
+                <property name="width">1.737in</property>
+            </column>
+            <column id="894">
+                <property name="width">1.737in</property>
+            </column>
+            <column id="8434394">
+                <property name="width">1.737in</property>
+            </column>
+            <column id="12321">
+                <property name="width">1.9in</property>
+            </column>
+            <header>
+                <row id="773">
+                    <cell id="775">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="515">
+                            <property name="fontSize">small</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="marginLeft">0in</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text" key="table.col.datetime"> Date Time</text-property>
+                        </label>
+                    </cell>
+                    <cell id="807">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="19059">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Requestor Login</text-property>
+                        </label>
+                    </cell>
+                    <cell id="19053">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="19058">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Requestor Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="777">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="829">
+                            <property name="fontSize">small</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text" key="table.col.action">Action</text-property>
+                        </label>
+                    </cell>
+                    <cell id="778">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="521">
+                            <property name="fontSize">small</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text" key="table.col.result">Result</text-property>
+                        </label>
+                    </cell>
+                    <cell id="19061">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="19065">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Target User Organizations</text-property>
+                        </label>
+                    </cell>
+                    <cell id="891">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="895">
+                            <property name="fontSize">small</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text" key="table.col.target1">Target1</text-property>
+                        </label>
+                    </cell>
+                    <cell id="89551">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="894555">
+                            <property name="fontSize">small</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text" key="table.col.target2">Target2</text-property>
+                        </label>
+                    </cell>
+                    <cell id="12323">
+                        <property name="backgroundColor">#E9E9E9</property>
+                        <property name="borderRightColor">#FFFFFF</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">2px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">4pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">4pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <label id="83495">
+                            <property name="fontSize">small</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text" key="table.col.DESCRIPTION">Description</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="530">
+                    <list-property name="visibility">
+                        <structure>
+                            <property name="format">all</property>
+                            <expression name="valueExpr" type="javascript">row["WARNING"]</expression>
+                        </structure>
+                    </list-property>
+                    <cell id="534">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="700">
+                            <property name="marginLeft">5pt</property>
+                            <structure name="dateTimeFormat">
+                                <property name="category">Long Time</property>
+                                <property name="pattern">Long Time</property>
+                            </structure>
+                            <property name="resultSetColumn">ACTION_DATETIME</property>
+                        </data>
+                    </cell>
+                    <cell id="808">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="813">
+                            <property name="marginLeft">5pt</property>
+                            <property name="resultSetColumn">LOGIN_ID</property>
+                        </data>
+                    </cell>
+                    <cell id="19054">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="19060">
+                            <property name="resultSetColumn">REQ_FULLNAME</property>
+                        </data>
+                    </cell>
+                    <cell id="749">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="830">
+                            <property name="marginLeft">5pt</property>
+                            <property name="resultSetColumn">ACTION</property>
+                            <!--list-property name="action">
+                                <structure>
+                                    <property name="linkType">drill-through</property>
+                                    <property name="reportName">AuditDetailReport.rptdesign</property>
+                                    <property name="targetWindow">_blank</property>
+                                    <property name="targetFileType">report-design</property>
+                                    <list-property name="paramBindings">
+                                        <structure>
+                                            <property name="paramName">LOG_ID</property>
+                                            <simple-property-list name="expression">
+                                                <value type="javascript">row["LOG_ID"]</value>
+                                            </simple-property-list>
+                                        </structure>
+                                    </list-property>
+                                </structure>
+                            </list-property-->
+                        </data>
+                        <!--<label id="814">
+                            <property name="backgroundColor">#FFFFFF</property>
+                            <property name="fontSize">70%</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="textUnderline">none</property>
+                            <property name="marginLeft">6pt</property>
+                            <list-property name="visibility">
+                                <structure>
+                                    <property name="format">doc</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">docx</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">pdf</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">ppt</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">postscript</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">odt</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">ods</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">odp</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">xlsx</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">xls_spudsoft</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">xls</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                                <structure>
+                                    <property name="format">pptx</property>
+                                    <expression name="valueExpr" type="javascript">true</expression>
+                                </structure>
+                            </list-property>
+                            <text-property name="text" key="report.details">VIEW DETAIL</text-property>
+                            
+                        </label>-->
+                    </cell>
+                    <cell id="764">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="699">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">ACTION_STATUS</property>
+                        </data>
+                    </cell>
+                    <cell id="19062">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="19066">
+                            <property name="resultSetColumn">DEPT_NAME</property>
+                        </data>
+                    </cell>
+                    <cell id="892">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="896">
+                            <property name="marginLeft">5pt</property>
+                            <property name="resultSetColumn">TARGET1</property>
+                        </data>
+                    </cell>
+                    <cell id="8934">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="8496">
+                            <property name="marginLeft">5pt</property>
+                            <property name="resultSetColumn">TARGET2</property>
+                        </data>
+                    </cell>
+                    <cell id="12324">
+                        <property name="borderBottomColor">#C0C0C0</property>
+                        <property name="borderBottomStyle">dotted</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="83496">
+                            <property name="marginLeft">5pt</property>
+                            <property name="resultSetColumn">DESCRIPTION</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="831">
+                    <list-property name="visibility">
+                        <structure>
+                            <property name="format">all</property>
+                            <expression name="valueExpr" type="javascript">row.__rownum >= 0</expression>
+                        </structure>
+                    </list-property>
+                    <cell id="832">
+                        <property name="colSpan">7</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomColor">#BBBBBB</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">1px</property>
+                        <property name="paddingTop">8pt</property>
+                        <property name="paddingLeft">8pt</property>
+                        <property name="paddingBottom">8pt</property>
+                        <property name="paddingRight">8pt</property>
+                        <property name="width">12.25in</property>
+                        <label id="839">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <property name="whiteSpace">nowrap</property>
+                            <property name="width">100%</property>
+                            <text-property name="text" key="table.empty">No Audit Records were Found</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+        
+    </body>
+    <list-property name="images">
+        <structure>
+            <property name="name">logo.png</property>
+            <property name="type">image/png</property>
+            <property name="data">
+                iVBORw0KGgoAAAANSUhEUgAAA14AAAE9CAYAAAAbJ7MvAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAGXRF
+                WHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAU9xJREFUeNrsvQ+wJNV933v2agX7J+LOYliE
+                FnNnJWQDRtkBOaDoYd1eLCEpecoOxM8WlqmdleKXqiR4Z/PkZ6XkMrOq+E+qUsWsXeWqOCXtbBE9JJdj
+                ZuMksrFK9EpUGewIZmMMCOxsX1j0ZyFiLmiXfxK8PnPP3Nu3b/dM/5vuc7o/n9qu+2fv9J9zfuec37d/
+                5/zOJgEAAAAAhfD/fPrX9r/55pvtXbveUf/Xhw5amzZtOkmpAJSTzRQBAAAA5IUrMg66X/quwFiqcjl8
+                +lc/IwVXxz3qb775hjjvvPPkrzvucQtWAoDwAgAAAEhLyz26ruBw3K/2+KiKEPvV//ffLCrBZbmHkKLr
+                jTfekIJU/ncT8wBAeAEAAABkQd89Gi+88EL9sceeaL3znfXWpZdeKpQQGyghNnCF2IkyPfSvfeazMsLV
+                ckWWElzrRdcV73qX/LMh5gGA8AIAAADIAimsxI4dO8TX7r9ffOVPXxVbt24Vu3fvrrv/XBaal7797eMI
+                kK3EmDwc08TY//zrR/d85St/2vz+919oySmFY5HlF13yUa+4YiS8BpgHAMILAAAAIDVSPClRJd75zt3i
+                8ce/JV555VXxxBPfEt/61pPy/0eHq8Dc43Lr7ZdcYi0sXC62bNkyFmMjEeYRZEMdBJl7b/NiFMkbWo88
+                MrCcpaXGPfd8uTYWV5NE14UX7hDvfvcVCC8AhBcAAABAptjuYV111VWu4FoTW95j6emnxdPPPLPys/vH
+                tdq8uOSSS+TRuOSSnY1Ldl7cnJ+fH4se+WU4FmIeAWOrr8MssgW611lwv9TVj5a8LSm2vv3t7zT+4sGH
+                aqdOOa6QfNwVVW+uE1uTRJfkhuuvH1+ij2kAILwAAAAAshVeV14p+pv+ywbRJbw/i1GUTCy/+JJ48aUf
+                iL/9u/+1+jv5d5f/+I+LLVvOFzt3Xlybv+AC64L5C8QFF1zQdL/3iybvj446otBQAmvE0tLTYjhcFsPl
+                oXCcJSHF1npRFU90SRYXPzC6p7KtawMAhBcAAAAUL7zE1q1bhEys8b3vfW+i6Jr0u9OnT4++/7v/dWrl
+                9+P/d5HTEy+++KKV788/X30vPzeKWtXHgmxFBK2IIzH6t/K75eVlseyKLPmzFFxvyL/1CKmNoiqZ6Nq2
+                bav8todZACC8AAAAALJkdS3T7vqCOHPmTCLRtWlFZa2JNo/okl9fe+018eyz3179+ZSztO5vNooj389e
+                kTUD0SWF50c/8uHxjwgvgJIzRxEAAABAnrjCZ1moqX5XXvmTMxFd4+/9P+siuiTW4uJqtKvqG0oDILwA
+                AAAAZsMo6lWvL1RSdO3a9Q7x0Y+uRrs6mAMAwgsAAABgZsJLcunbL6mU6JJ84hdvG39LtAsA4QUAAAAw
+                e+G1sLBQKdEl13Vddtku+a1Mfd/BFAAQXgAAAACzYjj+5u2X7KyM6PJNMewS7QJAeAEAAADMDO+eVZe4
+                wqsKoktmMfRMMXSk8MISABBeAAAAALlwySWXlF50SW69pTmeYihpq+yOAIDwAgAAAJgp9pr42llq0SU3
+                Sr7hhuvHP/bdezxO9QMgvAAAAABypTY/X1rRdcUV7xL/9Nbm+Ee5tq1FjQMgvAAAAADyYjXBxiU7d5ZS
+                dMlkGv/sU5/0/qrFFEMAhBcAAABAnqymlJ+fv6B0omucTGPbtq3jX/WYYgiA8AIAAAAojHk51bBEokty
+                x7/6l95kGlJktqlpAIQXAAAAQLGUSHR94hc/7hVdo3VdTDEEQHgBAAAAFMqP//hlpRJdngyGEpk6/iS1
+                DIDwAgAAACicMoiuW2/Z5xddcl3XMWoXABBeAAAAoKX4Mk10XX/9PxCWtej91cC91wPUKgBINlMEAAAA
+                EETz9nvm3S8N97Dco+47JuH4DplYYtC/+7alSR/acv754tXXXjNWdP3SJ27z/mqoyg0AAOEFAAAAG4SW
+                FAtNj9hKQqA4c88vRZitjr7//y/eebF49tlvl0Z0kUwDABBeAAAA4BVE+5XYas74UlKMtdQh/tt9Tzr/
+                +OafCBRZBosuSYtkGgCA8AIAAAApthbEyr5SUgTViriHl86+Vg/7P8NFF5skAwDCCwAAAMElOkpwaYnB
+                oqtLBkMAQHgBAABUW3DJ9VtdnQTXzou2r/v5NV9iDYP26ZLItPGHsDQACIN08gAAAOUXXQfFSnbBlk73
+                5Rdezz//v00WXaSNB4CJEPECAAAor+CS0wp7wpC05oguAEB4AQAAgGmiS2YqlFMLa7re4+7La6HiSyfR
+                tXXrFnHHv/qX4rLLdvn/iw2SAQDhBQAAUFHBpd1arjC2bz9v9fsXX3zJONEl2CAZABBeAAAAlRVdtns0
+                dL/Xui/a9dJLL2knunbtesdIdG3bttX/X7KMm2yQDAAILwAAgOqJrj3ul75Y2aRYe7ZvO2/dz6+++qpW
+                ous977lGfOIXbwsSXazpAgCEFwAAQIVFly00Xs/l55qrdq77+bnnn9dGdIXs0YXoAgCEFwAAAKIrX9F1
+                8UXbN6SDP/P8WVdAnY30eX9ijeeee14L0RWSuRDRBQAILwAAAETX7ETXtm1vFddcuXMUodp9+Y6RYPIm
+                xQji7NnXxKmnh+7xgnj08TPi0SfOiHPnXl/3N37Rtvzii4WKrglJNCQdV3QdxuIAAOEFAABQPdElE2n0
+                ZiG6pNi66cbd4qaf2S12L+yI/XkpzKRQk8fHPvyTo9+dWnpBfO0bp8TXHjg1EmH+854581xhoksm0fhn
+                n/qk+LEfuzDocVqu6DqGxQEAwgsAAKCayEQamWYvlNMHP37LNSPBlTVSaH1KHr903SgK5uWZ06cLE11y
+                PdettzSDkmgMleg6jqkBAMILAACggjRvv+cukeEeUrMUXEFsSKxx5vlCRNett+wTlrUYdItSdFmu6DqJ
+                tQEAwgsAAKCaomuf+6Wd1fl+wRVcUnRF5fXHHhdvvPiieO3Bvwz8//Ped72Yu+AC8darr4p8zqefOZ2r
+                6JqynmugRBd7dAEAwgsAAKCiomu8ris1cgPjX/nlG6au4frh6dPilfu+OjrCxFYYUoRtufmDo2PzZZeF
+                /t0zzzyTm+i64op3jdZzBUwtFKps24guAEB4AQAAVBspDFIn09h7427xqU9cOzE74bk/+mPxgy/0xA8f
+                eyLxdaRQk8eLn/stsfnqK8Xf+2RLbPu5W9f9jYx2vfzKK7mIro9+5MPiox/9cNjtSsF1BBMDAIQXAABA
+                hWnefo9cjNRMe55PuoJrnGkwTHC91P098aPTz2Z6/1LADT/9mdE0RSnAxjz11N/OXHTJqYUyyvXud18R
+                dGtyPVfTFV0nsDIAQHgBAABAL+0J7vjlG0ITaLz64ENi+XO/mSrCFQU57dDLU089NVPRNWVq4UCJriXM
+                CwAQXgAAABWnefs9+90v9VmJLhnhksfMnY6rr1y31ut73zsjhsPlmYmuCVkLJV1XcB3CugAA4QUAAABj
+                Omk+/AshqeLltL/v/9//InbSjKT413f91Te/ORPRJTdE/sQv3haWtZD9uQAA4QUAAADrSRvtuv66XYHp
+                4qXoev7jvzTzqYVevNMMX3nlFfHkt57KXHQtLn5glEQjZGqhrUQXUwsBAOEFAAAA6+gk/aDcGFmmjNdB
+                dPmnGT755N9uzGaYQnRdeOGOUZQrJIGGeP7757oX/9h2phYCAMILAAAA1qM2S64n/bwUXf6U8UWILok3
+                k6HkL//qf2Qmut7znmtGoisoynVq6QXxu//xIeE8PXSwKABAeAEAAEAQraQf/D9v/glxzVU7N/xepnTP
+                W3RtuuBt66YZLi09Lb773e+mFl1btmwZCa6///ffE3jdP/mzb4kvfPGR8Y9t92CfLgBAeAEAAMAazdvv
+                mRcJ9+3atu2tgeu65IbIr9z31dyfRYquuQsuWP356994ILXouuaa8CjXmefOjqJcf/PEGe+v626Z7unf
+                fdtJrAsAEF4AAAAwppX0g3KDZP8Uwx+ePi1e/NxvFfIg3mmGMtrlOEuJRdeOHTvELc19oVGuL937qPiy
+                e0woU9Z5AQDCCwAAAFaxknxIRrs+dvNPbPi9nGJYBOe973rx1quvWv35xNe/kVh0feADPyM+IjMWbt0Y
+                5Xr08TPi8198WK7lmnQ7TYQXACC8AAAAYEUdpJhmGBTtevXBh3Lbq8vP29p3rH7vLC2Nol1xRdell14q
+                ms1/It59xcaMhWfPvjaKcv3X+56McjtMNwQAhBcAAACsYiX94E03btwo+aXu7xXjZFx9pTj/fWvp7I8f
+                /6+xRNf5558vPvCBG8VHPnxz4Pm/9o1ToyjXuXOvxy1bhBcAILwAAABANJJ86Keu3Cl2Xrx93e+KjHZ5
+                13bZJ74uXnjhhcii66d+6mrR3PcxceGFFwae+/P/6eGoUa4g4UV2QwBAeAEAAECyiNcN79214Xfn/uiP
+                i3Ewrr5SbPu5W0ffD4dD8aAr/qKIrh21mviFX/i/xBVXvGvi+Xcv7Mi1bAEA0jJHEQAAAJREeF132Ybf
+                FZE+XjL/G59d/b5//E/Eyy+/PFF0bdlyvvjQh35WfPazn9kguuSmz36uuXJn0lurNW+/ZwETAwCEFwAA
+                QIVJKgouvmj7hmmGL9/35+LNF1/K/RlkJsPx2q4HH3xInDrlTBRdP/3e68Sh9kHx4Zs/tOFccn3a927c
+                O3oWL/JZ5TMnpI6lAUDeMNUQAABALxKJgt2X1zb8rqi1XeNo13e++11xv/31UNG1e3ddfOiDPyve9a53
+                bjiHnCIpRdePTj+7+ixbfcJMRr3uf+BUkluUa+hOYGoAgPACAACoLokSawSteXr9scdzv/ntn9y/um9X
+                vz+eYrhedNVqNfHBn90rfvqn3ztVcE16Fn+ELwY1zAwAEF4AAADVJpEo0CHitemCt63u2/WVP71PfOc7
+                31knus4//zzxszfdJG688f2RBdekZ5ERry/nKG4BABBeAAAAFWf7tvOKV4z//nfE3AUXiEcGJ8Vf/MWD
+                q6JL7sf1/ve/T/wf7/+HYuvWrat/L5NmSMF19gvHQgWXF/n38vxFiVsAAIQXAABAeagn+dDOizbu35Un
+                W27+4GgNllzX9ZWv/Nmq6Hr/P3yfuOkma4PgkmLrB1/oxUr+IacbejdkDoryAQAgvAAAAGB2wiv5eqfU
+                yCmGMtr18iuviHvu+bJ4+eVzotHYI27aa4kdO3asE05SbL38R/dmct3t28/DWgAA4QUAAADVYDzF8J6j
+                x0R9YUEcaO13BddaNEpOJ5RHUVkWAQAQXgAAAGA0MouhnGL48suviFua+1YF1w9Pnx5FtqTgirJ+CwAA
+                4QUAAAAQ5ERcfeXqnl1bt24ZHVJovXLfV0cHAAAgvAAAAHTFdg8r7oceffyMuOaqnas/v+WyXTO9Sbmu
+                68I/+P3R93Lt1ng6YZxkGXHxZzQ8tfQC1gIACC8AAAAocIC/7LKZnv/vfbKV+1TC8cbMY86ee52KBgCE
+                FwAAAOTHqadfWBfxksio16xEkdzsOE+CInhnnj+b9HQ2FgMAeTNHEQAAAGhFIlFw5rmNIsQfITKZoGdh
+                qiEAILwAAAAgKcMkHzr19MaPnfe+60tTKEHPEvTMERlgZgCA8AIAAKgw/btvO5nkc3/zxJkNv9ty8wdL
+                Uy5BzxL0zBFxsDQAQHgBAABAoojMQ988ve5nmWBDpnw3HfkM/mQh/mfNQ9wCACC8AAAAEF6uGNmYSGPb
+                z91qfGEEPYNMn58QG/MCAIQXAAAAJBYHDz18OlC0yD23TEXee5Dw+toDp3IVtQAACC8AAACE14hz517f
+                MAVPbjos99wyFXnv/o2T5TOeS76Hl415AQDCCwAAAOQapCWRMAHEn/zZkxt+t/2T+42Mesl7lvce5Rlj
+                lO1xLAwAEF4AAACwqhGSfEhm+vOvf5IRo7e17zCuAOQ9+6Nd8tlSZDPsY1YAgPACAAAAL72kH/zSvY9u
+                +J2csmfSvl4yk2HQFMmgZ0N4AQDCCwAAAJIphJWU506Sz8qIUFC69dq//x0jphzKe7zwD35/w+9TRruG
+                CC8AQHgBAABAEN2kH/z8Fx8RZ8++tu53ci8sKb50R96jf98u+Sy/+x8fSqVlXTG7jEkBAMILAAAA/PTE
+                SqQmNs89fzZwWt7Wmz+ktfiS9ybv0Y98FvlMRYhYAIAseAtFAAAAoCdP/M///OqVe37uSvfbRpLPP/l3
+                /1vsvrwmLnvH+gQVb736KvGWy3aJV+77qnaiK2jPLjlt8gv/3yNpTm33777t32FRAFAkRLwAAAD0ppPm
+                w3J63qmlFzb8XgocnSJfYaJL3nvKKYapyxAAAOEFAABQctSeXr2kn5cbDf/2kQc2rPcai68f+9LdhSbc
+                kNeW9xAkuuQ9y3tPsVmyREa7TmBJAIDwAgAAgGm0RcK1XhK5NurXf/trgeLr/PfdIC554H6x5eYP5v5Q
+                Mr29vLa8hyDRJe855bouSQfzAQAdYI0XAACA5qi1Xlvcb62k5xguvyIe/uvviJ+54XJx3nnrh/9N558v
+                tn7sH4/2znr9kZPizRdfmq3zcdmu0dTC+V/71dG1w0SX8/Qw7aV6/btvO4IFAYAObKIIAAAAzKB5+z2n
+                3C/1NOfYtu2t4t/+m5vE7oUdoX9z7o/+WLzU/T3xo9PPZi643ta+I3Ba4Ri5pkuKrpTTC0daU5YVKeQB
+                AOEFAAAAcYXXovvFTnseKb4+9YnrxE0/s3vi371835+PMh/KI2kUTK7hktMY5RGUJt7L175xSnz+iw9n
+                IbpGxeWKruNYDQAgvAAAACCJ+LpTZLRu6frrdolf+eUbxPbt503921cffEi8/tjjo0NGwuRXvxiTImuc
+                ql5+lUfQ+i0/482R//LhzCJscrPkW7AWAEB4AQAAQBrxJTe1amRxLhn9+vgt14iPffgnC3mWjKNcEkeW
+                DVMMAQDhBQAAAGmF14L7ZeAetazOefFF20cCbNr0wywF15fufTSLrIV+pOg6iZUAAMILAAAAshBfe5T4
+                yhQpwKT4uunG3WLnxdszPfeZ586Khx4+Lf7kz56cheCStFzRdQzrAACEFwAAAGQpvvaLFJsrT6N+eW0k
+                wq65cufELIiTkFkKH33izCjClUF6+El0XNF1GKsAAIQXAAAAGCe+vPyUK8B2XrR9FAnbvu2tYvfl68XY
+                qadfEGfPvT6KbJ15/qz4G1dw5YTcr+sA1gAACC8AAAAohfjSEEQXACC8AAAAAPGF6AIAEGKOIgAAADAf
+                lVSi5R7DijxyG9EFACZBxAsAAKBEqGyHtsgw1bxmSGEpsxcep7YBwCSIeAEAAJQItYdVXYmvsiHT51uI
+                LgAwESJeAAAAJaV5+z0H3S/dkjyOfA6ZMn6ZmgUAhBcAAADoJr72KNFiGfoIjliZWniC2gQAhBcAAADo
+                LsBk1sOOWJmGaAJyLVeXTZEBAOEFAAAApomvefdLWx26Jt8YCS4luphWCAAILwAAADBagLWUAKsjuAAA
+                EF4AAAAwWxG2T4mwZkG30JeH2ocMAADhBQAAAKUWYPNKfMnDErOdithXh+0KriVKHwAQXgAAAFBVIbZH
+                CbCGWJmOaCU8ldx7yxEr+4oNyE4IAAgvAAAAgMlibF4JMUnN871XZA3V9w7RLAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAoJZuqXgDN2++Zd780Av5L/q4W8Hs74HdO/+7bljAnAAAAAACopPByhdWi+6Xu
+                O2ohYisLHHUM3WPg+TpwxdkyJgcAAAAAgPAyWWDJyJWlBJXlEVk6sSrC1GETKQMAAAAAQHjpLLQWlMCy
+                PELLRKQYs9XRR4gBAEARPLvw7oUCx9LBrqWnlitc9mHLHmaN45b7UgXLe48IXk6iBW6dnKBHKmXdDo0S
+                Xq7YkoXZEmuRrTLiSAEmVqJhx2lCAACQk8Nyp/ulU9DlrSo7m27ZH1X+Td703HI/UMHyvl/5krpiIb4S
+                1eu88qN1FV72ZoPEVlOYG9WKg3zGtjzcZx8qEdZzRRgNEAAAoJzOYrOgy7fc63eqGPXSHOn34vclkA0a
+                i64RWgovtV6rqQRIo8IGVFONr+WWiVTwPffokqQDAACgNLQLdhY77nGAatBLeCGIE9uy1sxpJrgW3OMu
+                sRIm7FVcdPmpK4MaumV0VEUCAQAAwFBUtKtdtPul7gMQESa3pf3CgJlxWggvJbiOKsFV9JsfE2i5x8At
+                s/tVunwAAAAwDx18npoG4g8QxFm0Je0pVHj5BFcLm4mN5R42AgwAAABnsexOa8VAEEfEFajSBzZillwh
+                wkuu4fJMKURwZSfAjqo0+wAAAKC3s7hf6DPDp6buB/QCHzkaHVNuNHfh5QqD/WJtSiFk30DlFMQ7KQoA
+                AACcxTI6rxWijiCejNq3y0J4bRRcclqh3DehJ1jDNUtk2Xbcsj7F9EMAAAAtnUUdEwFIJ38ftYNANwyj
+                Ajm5CC9XABx0vwxMUqQlQHbotprSCQAAADjTpXJiq+LPqTVM4MMtF7m8poXwWhNc8yrK1RVEuQrrRN06
+                eIT08wAAAFo4izKqVNf09iycfIQ65WKg8FLT3BxBlEsHZKYXW62vAwAAgOLQParUooq0FMQkT/OgUu03
+                EV5iNYGGLYhy6YSsix5TDwEAAApzFuVLaUt34YWTryUdimAdRu77m7nwUvty9bAHfQ3VraN75TRQigIA
+                AADnGSffCBDEChXtMnI9YmbCS63nulcQojYBGZq1EV8AAAC5OYsmRLtW/QTl3IJm4osiWC0HI2fVZSK8
+                lANvCwPnWlaYBuILAAAApzkA6dSS4VA/2gjilXIw9cZTCy+P6GpgB4gvAAAAWI+Jaa9x8rUVxM2KtyUd
+                98DLR3ghuhBfAAAAMJUOTj5U2JZ4/rTCC9GF+AIAAIDJGBrtwsnXl7qK+lSxLcl1kvVKCi+xsikyogvx
+                BQAAAOUUL5V18jWnRVuqkPBSKeNb2H0pxVeXYgAAAEiPqZu84uRrj6WiP1VqSyZlBc1OeKnNkWmE5aXl
+                1vGdFAMAAEBqjNzktepOvkG2VSn/tAwPsTmm6NojyrM58tA9Bupw1FfRv/u2EzHKQnamdXVYnu9Np+M+
+                nx21LAAAAGA9Jm/yGuLk4xPohdxrbWHX0lNLFWhLJq+TTCa81NqfvuFCy1bPIEVFKkN1P39SfTvuiA6r
+                cpLGIafsNT1izET67rPU3edcpm8DAABIJFZqJXmWyjj5htFxjwMVec5SECfi1TVURPSkiHAFxPFc1MqK
+                oJPHcSXE9iiV3jKsA64pkbqXfg0AACCR8MLJh1kL4rYriEv7klxFjltleZ5Ia7xc8bDPsId2VAdRc4XQ
+                gbxEV4gQO+keh9xjhypDx6BytNy6P0i/BgAAEMtZlOvhayV7rBYbKmtHTZR/rVepnm+q8FJTDHuGPI+c
+                Tth2Rc5u9zis2zQ5936OyXszTIB11PRJAAAAiDh24gQDdZKOkq2THBFlqmFHmPHWRk6F7JiwJkkKMPfL
+                MRVN0r18a6psb6FvgyqhXjp59ypsRGyrtud7J+16UgAwzlmU0a56WZ189/m6ZZ7aZiA1aXNunRwr4bO1
+                RMkix5umOB5yfdJA82eQ99fyJLswzbmT0aSe0H9vAossh6F1uBjimIc56l7HfOhpYwOSmRQmriyxlpW0
+                PiOnyRa+bKqm9lsVtJOFANuo+YS5vz2Px6ehKQLcdd7kViKdosYY13EsxRjjluOpEguvkTNsupPv1tH9
+                ogR7Qnlw3DrZXcKXGGVrS/Y04aW7YUrB0i6Ds6qiXzpvXixFwbU46aP24HfUZ+Ggj7c5sHHOM63DParu
+                xvWoQ4duj+u8yPWoENrOo0Y6o9a146lvrdo2wiuTMpRr4vslbybGO/klFF6lenmh6mi/KM8WVtOFl3qL
+                b2t88y01Za9MA/6i6rBrZS7zgClcMydptM6TldLK+549DD3OeZ+pa7HrUDpCJm3v0Detrj37GubWJrIU
+                LSqi1fTYSW4OrKeuCxfdCC8c+jj+gMlRr5LWk+3WSWkyUZc0cmxPWuPV0fSmh0oAlO7NsBQHrgNgqYFY
+                R/ElbSKLjrZRgKjfFNMJaysnTIdGX/M4hV33/mQ0rIcImyoExnVo2vxwb13bnrrWObLfzdmJkeWyNwM7
+                2e8p7yKQ/UtLHu69DJXo7hLlNtZRXKyI6BLKbo9R61phuTa4xxVfJ0vQlvaJkk7XnQsZjHTtPOTAZJV5
+                Oo4acC31rLpRV45KWZ31Rfe4V6y8hW5r3OgbytF15HTgMtdJEkfaPeRbsoEox6JcSwkvWddHyTCaiY3M
+                u8edyk56BYouPzVlswPatbF0KubkL1Ll2tHmOfRms2GdR7MKbwLlM2oc+ZKNoWxTPPeI/N/YZ+mYy/3W
+                OuoZelVL0KGmrrbVUSvpY46dchkZkWKhQ7Sz1HYybtej+yWxkf5ULNrl9QewTb2Qe611di09tURb0pO5
+                gMFpQdMHblVp8PFEvnSj4cniZ7wj5h53iZXoiOmNvC7WomCVeVOuktI4wpxtLzLpCwURsLh2sl+1c9Ps
+                ZDQtW0biqWsj2mXurkLRTct1krFLbHEWgr60BE017Gh4n92yJdKIIb5aNOqZOGKLYm1KYZmQTmVPTqMq
+                i0AOqz81VaxbIcEV1A7ltLQ78TNC7WRBZeftCbPXCzRVXTP9UEOU+Mh7XLQ1Gb86WIB+wkVtPGxqW2qW
+                uXLmQjp4nZApdw9VtfUowalbatqWmrZjqjN2l9A3gUlWSCdz/KZ8viwPpaKU96r6qwuQNtxxy+QRNWUW
+                1mxlHA21SlTXPRXpnKeGtaII8dFT08l6RfsDRL207CtatCUDhJd6m6aTMzosu/KN2rEJ/ZJtGFcvymmX
+                b7/bFbIdWU+OSqluuiM9jlLSJ2xETkkj+rW+nXdL+ohyPLARX3pQULTL8aRy72pik6AXbdqSAcJLQ4eG
+                BeRiFPVa1tAYjXJ+lZNii+otfpbIlyl9Fekz1Zm+U5Q/SplJn6ky4lXSKVdRP6cC7byB+NKnzRVwzd74
+                G5U63C7ayTd1aluJqasNiE2iEgJ+zueY6uRMO67gOELbWRVfx4VeG1o3DRv0bVHcBsi60FZT0oypN8/U
+                wg69QGQs5ZRXauqhJ4FGVcQ54qtglNgowm/qTfk5b0ye2lZmWoa1pUrMRprzDdYYjN7o5nyaFPVqYD6r
+                5eCY4JR7opRMLUzulFdCfKlobq+q9Yy5F0YRWxP0/KnC1bRDR4OygMnYOdeTSXutlXk7mFDhpZNzY7Nv
+                yUZUmeiUaAOH2Exqujvl6t4GCOZy13NGtnK04k5fQ5UB5EiBb+h7MX+fFyZObRMa1V/VBXEr5+sNlY9R
+                qPCyKmyYJqHTgnGL6jDeKdduoFRCwRZkLUR8RRNdLap5lGl2H8WQu0Ob9xv6wa6lp05M8A2GGpQJTPfh
+                8qwn7fdaU4K9XvJ6WC+81MaMujg5ThX37IqKinoNNLmdGimsjXfKezrVoWd6IUk0EF+Irnj0WO+Vm6NY
+                VLQr9MWrK8hkEq6iZ8Q0DJraVggF1VNH82Ip4v56RT3sOOJl6TR40DSTd74FYFEdxqOFU47omrn46pfI
+                MbcQXYF13KEY8umuCuinhhEcdh3qHxvUr4yaumaddO9LRurreesM/zpJhBdMQ6d1Xgivcjhstop8F23X
+                rOmaHXWh32bskC1tDdoxjvPsnMXlSX+gnEm7aJ+ADZUno+opz75YjvG6TgNtV6T9bhBeujg7A/btiuCd
+                ruzrpYsDhaNcHvFVWERE7dNlioh3lHMTdAw1v3eLTZYRBZCcgtajSLoZ/x02WCx511Nbw7a0WMC4X2i0
+                S7JZM+eZt7HRkU6eDlkF61RFaWioweBAzqJrUeOBeuARVZFfDKlnqqtBpYhpSROdIvf+yBxbXuQei231
+                gg7KISrsqM6i+3fHXYfWKXhsbrn30CnawdUZmSQl53qqyZcGauuBKrelXtEPPafZgmub5mheWSknE8pB
+                K89MhyrCptsLFzkYyreDddd5vdY9DskNzONE46WokUmC3OOAe+xQAqyn0TOSiKG81ARbfcwEA6JdRTq0
+                G8YSLEa7eupo1JYWRP7RLntCVtD8hJfQKGLBG9hYZXVS6DOtqU6NlIpujutEukKfaJAUXC23be12jyNZ
+                TntWQuyAais9TdosqZ/LC3VbHjHhyChW3C5HA/+grWtCB11Q0ac866muUdbJTkWuGSi8dJlmaNMMY6NL
+                WvkqCy9bHX3VqMdHX5iz7sdPLQ9xoCKlLU2eWdZZY9ZbWUgxpwRYQ4P22yERQ2lpENHMloLWo0hirwVS
+                STh6BRdZTRD1mkn9mi4+VLQrb9twdIh2STYLfd42D2h/iZx+S4P7qIrwGngE1SDOGgrlBDVUfVlC/0QS
+                MgnDPjnFrswDgBLFzbyj7Spifa1bxneJYqMTsg4OCJBt2lHHcMJ4ZHm+1jXv++R0Q/bENL+/SiqguqL4
+                yKe8/hFMZ2r95mlbMuvkHleEnCzYLqrSfgOFly4RL4f2Z6xYLbPwctQA1kuzWF199oQ6DishJh2jlsYi
+                TD73TISXWkdmadB+mkVmUpXrx9yyGIji3k7LNX2dCmaTHSdN6ccU3eO/PazseMHTjnXL8NpAeGVDgdGu
+                qSnkw5CJLdz77olio051DRM6aEVB9SSFz4GC2tK8KCbapY0NbkZEGI0uU9jKuOGtdMo6s4qEKCEmO4Jj
+                nqx+ugmwuntvB+V6pxmcu6OBoLZ0yPwmpze65SwKFF8dUZ2olyzjroo4ZlF3UrDK9nFEw3bMVh/ZOqpF
+                0M3A3lsalB3Ca3o951lPRWadbBfgM3Z0qmydkms4tL3Yg74uyUjKNMBLMSsTLOzNq3xV4oW9ymHTrR1k
+                3mHJKYwF9zvj6YXLGrXlY6K4/XdaFVjrJR3QusoyeXLG7ViXxBaWgNSo9ShFZIm0004HU2tain6p3dAo
+                oYOWqHq2K/IyIe/ryvFeq8zJ2ggvNk4GHcxQOWfHCmoDJ5SI7WlUJrUZpJcv2jFtzcr5Tln/hwp0ksqa
+                BU+WZ0MJrqWc6vGIaseFz0ggeUomdAp8WZAFbKhsBnnXUyvvrJNqO4a8o13dpNN1Zym8wGwciiCbgcF1
+                mG4pOgoir6+y3rXK6HgoR9Aq8FnsGScMST0YVuy6M3Vc1T5sJwtoxycFiY+Mp6Dsa5JhVmtSCkhZHsQo
+                oQMWNbGejufszxWRdTJvAT7U5MWDlsKL9V0Ir0KdXddROqzTDamomyX0WMdXz3CT7MKjXTobonLYewVc
+                upbnxtk5tekDGtRlp+i2S/dulKM4pqv5+Uzs+02gW9Y6KWjz8Z5u0S6dhNeQ9mY2GTrmRThoWi78VVMP
+                m7qUU1amUmSRGjKluSgnqSnKgTZtWr3QcRBe5lFQ9rVVh7GEwqulIogwud7z3lA5rxduRbSlro6VzFRD
+                qDIdXUWXT3y1NLiV1E65K873FOwI9kwwShUpKWIWQLMEm+62NWzTHbpaM22pqC4g62xzmmyoXGSZGkFB
+                9TTzOiloO4ZeQVkbEV4AIdi6TS+c4Igf02DQrKlshGkoUkAONV/bpYtItAxu0/0ZbX2QRft1Cro8KeWT
+                OYrzwtwU8nmfN9YYkHdCBwPJu57yyDrZKaAcO7pWMMILqsgonbhh99wWxa/nS1tmRTr1tmkvBgyt46Jw
+                hN7r94pKZ1zGPRbz6m+LKDtHpYDPnIJSlgfZI1GvyfW0VEB/MbM6UdNL8x77bV2jXQgvqCodnfZwiuS1
+                rdxv0QNW4s5TTWEr8u37wLD6PmlaHRftKGvepnt0u2ZQcLSrUwE7bGFlU8k76tWc4fq7TgnbEcILtMAx
+                5T51nI4U0RmXU+XsAm+hnmJfoKIdetvAKrcNq+PCykn3aaRKSJNEygxk1LeIaNfMN3pVqeWLHqvzTOhg
+                JAVtfJ25WCloOwZ7VlHjrNj86X/+kzrch9W/m8aWBLf+tJhKcuON1y3FuOcib7Vjsq25ZdctWMTItnos
+                wX0XvdbE/vQ/f5gOY0Z1XGSbfubb54xo024Z2aKAqZxxyubUF79c8EByXeH15JZBp6BL991xdDmH55Nj
+                SNHrvTpuXR8ruJ61tnFVT70c76z1gBDtLG2woLbUjVHGhZgAES/zYfF0dIY3FtzZZyBw895kMSt7szA/
+                +pQZMLjt5288Ycq9Upd688ADDxex19CaGMkH6cwXHX2tu2W9iMVNHOuLiE62M2xLcspu3i+aHOUjaQ3C
+                C6pEj+cozJGrY34IrxnQNehe7QKuSXINPcXPBtuIM2skpUMvIxr9Cpc1Y30OwksUk6DGCJuSwkuLRee8
+                /UhUZmxGWE3hVeSgaSG8So9FW5gJDqal9XhaZLQr7xcIOjiollvme7A8reyiptpB2rZURIIax5QZTVJ4
+                seDXXHRxZm0DykpOMzxZhkpXz1GYExdX8PNSxUgn1IS9dgZ5rInJsN0uYVla0ypKkOc9PUrZog4vLUgt
+                P7meithQOQtRXkSCGmNmP+g01dCimcWG+fvlEoexnE4EP1S8bzGxTTuYln6ol0NF+SC9gq6rxYbKzNzJ
+                RQjFGt/dOtln2D0PhUEzmuY0GrwQEeaWmQl7JA1KVvdFPk+Ntl16TBDXCC8w1bktXADdeON1JzSxR6Je
+                k+tpqYC+LnGdFDRlt2vS7IfNiAiEVwaYMF3VLlnd2wXbXZypMSzwR3ghYkBLCo52jfbucu+hylUgo14d
+                kxzngl4M5Dnmy/V3i0qcmyCkTUqyNBJeujikMrw5T+MzUngNqAoAyBND12wiFvWjyIhLTbDMoqbq4DCm
+                GNrXnXD9Y9l31PMUxO4RS3iplxh5+6U903TDnGYDgUUTi2zg+zS6He2diYRvbngeqCq698WmJoVCeOk1
+                jsr1RU1KonBaFMFUOnnXSYL1d50KlEt64aVZpiU6QAMdo7JkC4SZwVRDyBqi7FBJp62k1LNIY15yZBbK
+                vF84RY4Gq60B8vZLeyZmix2t8XrqyWdsHRz5H73xhhReB2hf0/nWE0835+Y2FX4fb3nLXGwHyLU3KjAD
+                iipHt53WY94n6zexRTCgnKpUj7/3u19acJ+3hVXqwRtvvClF8DFsPRg5ne6L/+m/d1977fXcXha4Y33L
+                bSedO37l41On8j3xxFL7LXP5JkrfvPktXRNtYCS8fvCDlwdCjwhKza3kfW4lHxcwacDYc+7cK3VNbie2
+                8HLtjUrMgALLsU59A3VcvnKqWD12sFutqLu+zaLr/53A1oP5/vdf7Il8o7SR1t/Jlxgvn3u1lXNx2K6t
+                nDTRBsby1NbItphuOJ2WRvdiUx0ApcOiCKCsuI7ivGBdkZZimCIIxxUaclpdT0N/s4OtxBdeOs2Xb6pO
+                EcwYMBBe1YM6BwCTYe8oPbFk1ItimEjewktGIvdr5pMO8oqMzkx4KRWti/iq0SlOFqZCn2QFjrIdAIQa
+                AGiPchTxMfSlRRGEowRH3mNqO+H/zYquyXU4p6lz1CbqFUoHhzrRYLunZM4DbwUBAJI5kWRa1Vh4yTVD
+                FMNEejlfrxHkcxT0EkO+8D9mcuXpKryIegU72zLcW9folvoGFV/ZBlocBwCAeGMo0S4z6FAE4Sjh4WhQ
+                J60CfBHjbWPOU5Eyk6BOm1IS9do4YOhmcLZBRWiVzCQaBtW7QwsGAA3Qaao+TKgn/L+p5D3dzgqIROb9
+                EmNoerRLstn3c1/oM7+2pgyLfb3WDLyu0f30o+ztgFBBSGogvOT61aEAgKrToQiMIFIa84rTU/Zcy7n9
+                jHzygmZgdctQcToLL4mc69szOXtJFqj1SR0NGz1CpZpCMm4inqJFT7vqfQhA1dFwqj5M6bcRXuHIF9+u
+                Tefts0ufvK1euuftkw7LIrzmfBUppxs6mt1jv8ohZ/Xsuq2lGhq4yXWtLAk21CLXWoF1HyvSmXaTQ0Q3
+                AGRAhyIwbszeTzFoZ9Nt5YPUc75u17BZVtGEl6KnW+MTZiVxyNzYhH5v6XqGlmVZFlW3Crz2IOfPAQCk
+                gmgXwqKMqO188vaP2wXVS68s9TZnyMPJRX1HKzhY3Cn03NPC1HCv8Qt21f03DRReToH33BAAUGXIZGgm
+                cvPefRSDVv6YDIZYeYuuMu0ZOxeioHUUX3Ju6cEKia79Qs+3PX2DG0CtYNGSiXgUxWblsnMWbAgvAEgz
+                li7SByCay4pav+yU/DE7ZXqYOcMesluFOb/qGXu61oHpDdjwqFfRbdPO+XNZUCc1MUBl6VAERmMFbd4L
+                lbHxUkW7QoWXxlGvUSW4jfAuRFcxTncJssPVhaFv0NTU03qBtzBIurhVA7tpCgCoFMphtygJ42lRBBPH
+                V7m3VVm3TOmV7YHmDFXQMqvK0bK9xVbr2HQ2sk5JirpjWoZDtXFh0YLRTvn5IpPkILwAqkeHIiiH8ArY
+                vBfW0y3hM9ll3Apm8wQFvST30BL6vmmQ99Vw77GlQbrqLJxq6ZQ2aAC5ISOnlkHpSaV91IouswyEW1EC
+                aJRYxYT6Vv1Br8Bb6LDvGZiOakcWJVEqEX2AYpgovDolrPPSsTnCQxe9mH8SUqgM3A5WOgpGbrSnEoZ0
+                NC5jr9AtEw3VUR0wwEaOaiDKnQxecPRFsW/lTNmQs1Wgwyinq5D6H3DaQDeans17wYfaULlXIl/NKesL
+                wLkpFbkkzAhfyqljp0xagCnv1T3uV+Wru+jqlG1x49jB1X2bAnV/OnSkqacJKhsq0qlv6z49WYMppX0c
+                GzAd1Y5alESpqAkyHE6jTNMNO2WtpLkIztJhYcYb0Lp72FLM6CzAPILLFmZMg3BEOecOay++NBJdWXbo
+                RdpSzYDOvCeKfRHTEQA4baAnbTLUTvTXT4piMwhn5neqhCGlZHPEv2v91eBxU6afSDFj/6PmwYHzzHek
+                k9d/7Jt/WPgb3Kvf+/P73rWwq+2Wo2WSgbzj7Re1fue37si0/Nwy0E58fezWQ/W/W3q2qYmtzF926c6e
+                W05aJIR46+a39D//B7+RVcSz/8hff2v4wx+9UZS4aH/wH/2L/lf/++9rN4XhI//kjoNF9g9bt5xn/4ff
+                /+xSSdq0luheTj/4+p8bX8a/vvPyBfc5WkVdf9PmzcPt799bupeVP3pxWHt58FdFR5xqP3zue3JcPIat
+                B3Pu4Qe7b/zgJcvkZ9h80SWdMvd3kYSXVNGuMygLomNQ3ck1MT33GLr33lcC7HjeYkusrJEbrZNzHXsh
+                5GEO3ce+8IeZO6j/46SWzofsqBy3zqT4Kswpd68vo7W90985U3cPbewgqxPJaWyqPbYKfJ6+ew91HUS2
+                p973PP3s9zruUeRtdErWprVD93I6Ww5ntFXwc/Q/86X/cLiM9uuKWunL1Au+jU4WwutsSYXXr/W6x916
+                cjSop6TIdca5ZEA+q7PwkrhOymHXObCEeVmCasrJa7n3L3+2PccgS+dLOc0NVUaW0H/t1iQGonrTNWR9
+                2W49SsHecW0jt3VtMsqlBE5LszKxZyBEOwU/57ieLU0inHtUf1QrWT0D5C0MZD9adFSmzOOmfLZewfdQ
+                d+t5/7898/QxLD6UrjB3iUjXrdtSrzPeHPPv5dsOx3BBsU48uk6Po55pINY2oLOnnKOhyqCmvq8b/HYh
+                7I1DS6eIQM6MhfrMBZh7jfEi8Lam7SpzJ0KWpyrbIsVXQwfxpYnoKruzCNWh6H7Udp3GpRKXb1/5B0X3
+                V3LsQHiF0xNmZMsO8j27Za+cWMJLOigq6lWmdMNj0WTRVtc6NbeuT1IMqwKsrwacTNYLquhW03Poyiyj
+                IB1RfHRvtB2Fml6au72rqcg9DQbHPtEuMB1Nol2ldhplJMIt554G5Wy597Ho3g/9lt71FFswlj3aFVt4
+                KfEl13u1RPHhZpiRQ5z3WjgDWBVIru3Llw62WIuSOpMiYiqiVRdrkVFL6L1Rtl94zgQV9epqMDDIOpGR
+                L2n3R3ISXPNKeOowKA4FKZqhHMj+qsiXGI7rNFZh7NSh3xbqHhBe+tcTLy7SCi/lNB1znYcGA3bp6Mm1
+                fBTDRBp+4aTWDpZRgM96ykxHA2dJqOt3ZeRLPfdMBnMluNpCr2mlua5lBJixI47TOGPkVMpf33m5nAFS
+                9GyNpsxgWfKpnWnrqSfM2c+uV5W6nEv6QXewPiSIepUJOd3oAMUAYiXpzMwFuJq2qdOgYImV6Nf97rFf
+                CaUsBNce97hLrERJOxqJrkFeUT6AWSKTLYji11lXyR/SRWR2sP7S2GRl6nIuzYeVo474KoGjLcx5KwKz
+                JzdbUNNa+5o9vyXWtqK41z0OqoylcYTWPim23OOUal+6JU+RUwybmDqUhKKdtkqsTRmj1lY5OoxVam0f
+                hNeTCTkZ7CpFLjenPYEUX2qqFY67uaLLqnAGQ/ANZAUkmmgpO6xrWB7e9X1jwRI2kNWFOdlN20wxhDKg
+                SbSrW8Gil2K3p0Nf5h4skZhsmz0DbKkyzGVxEiJfxtJHdIEHucYv9xS9yv6aYm07B52RUSsr5DBFdHWL
+                qGeAGTreRSLf1lcxC3Bfkz67TdQrHLXfmaPxLdpVy045l9WJlPjqYuZGOdm3ILpAMShyjZ+KspGsJwdn
+                Sa3PBTAemVJcFJ8ltldRh35Zk2eXL8OYNm2ujVZON8xleTI1oLewce3pkEgDvKJLaLCPnYrCdKiOmdYz
+                /TOUaiwr+PqOiihUFZJsmFNPOs4oqcoWDLMTXh7nqSHMmDZUNWSdtEgZD37RpUvkU9lmj2opdz0DpEVF
+                u6yCb6PSfZVKiKBDGdTVWj8IrifZ7/c1vLVKCua5WZxUTRuqCzOyqVTN8WJtB2jtjLNmFNEFYIjTxvIK
+                ffrqFlVhlMipbLR4blYnloO8e1wrCAHr0jFaBWSrA5zxNOILpwbRBbABuXGu0CDaVaUU8mFolLLcUlFQ
+                CK4nGZ20Nbqlyo7vc7O+gJo6JDtIB9PPndFePdKJxfGCACGutU2wZjR9PcuXX7R9KCEdTfpR0MuJJkGT
+                /u1m7JtWtv3M5XERd+CXb0QagjfYeSLn89bVBrWAA7/a8ZokxNXUWEuwZjS2A0ICHSgjKtpVdH8+qFoK
+                7EmoKWM69NFNZR8QXE+6bHzdrXK0eC6vC6mph4eUALNpAjNDNiqLVPGBDnyVk74MlV0cNrDuxi9uWDMa
+                rf033DI7QlFASeno4DhSDdqWSYeqoP0gvNY7USfdY69YeWPl0AYydaxlNGO3clQhwPbESvSkag78OPp5
+                wuC6W2LN6FR6SnSxlhNKiSbRrmHFU8hP6n90oMWGylP9gSJfQFd+beRcUReWEQgpEsTKnFymEaUUXMqx
+                Jk18dPHVq8DjOmJljV9pop+eNaNEv9bXs8VaTqgALQ3ugWhXABqllheCtV6T6mm5YBvuVL0O5oq+ATUl
+                pi6IgKUSXDhcsWxuWa1/aZZU9I9to1HGNX4ycueJfg2r3gcQ5YYqoKIYOjjUPWpD+7JpE/XSsp56SqAj
+                vDRxhMcRMCnAbNpFKI4qIwRXers7rkR/mQbSXlVsQ0W/ZP1V8Q30aj3TkqEiSNFVK7rd4TiGo1Fq+Zog
+                odakeioqOkm02GWzhs6UnDt97Or3/vwe1XBaGnS2ujhaPd5sZy/63S8HXHvrqk7BMvAxhureu1UT4up5
+                D6n6a5e8vxjXs+wHcP6gMhDtMoquJuUk7YUkQ5PrKU9xaruCj/XHQpOIV4hDJZNwHHKPHWJlSlhPVG9a
+                UX/sSKr1G4iu2dqbTPrSMGhwtaV9yDZS9einSr4hs6bW1YDrlOjxBmJ9lBvRBVVjNA4W3Q5JIT8djVLL
+                113Bvp8aCa2nkyLf2WUdSn2FzSbcpJoSJg8ZmdgnVqISTeVklYmhEluyMfSZRliMAFN2No6etJQY00ls
+                9ZV94IBvrD/ZZuRbziOGR80dVc89shQCaBHtYppUvLLqaGI3ZKAMpyfymeVj89JijU0m37zrWC0ooxkf
+                pgmxoXKkR0dVHCy33hZFzuv43LLdlNLOmh47y9OJH/hsBDGerA7HIszSTEj763osqhFbAAAACC+tnat5
+                5VSNnau6Rk6Wow5bOViDqkYsTBNeIU58w3PUMxD9tufryFaYWjrTfsLy9RV5R8SGHlE9QFQDAAAgvMri
+                aC14RFjN5yhn4TSPnSivwBr/bsjb63IJrwjPFlmMM11Q2z5i/HX8fRI29AVi7aULIgsAAADhBZ7IGc4y
+                wgsgkrgmQgkAAAAIL0B4IbwAAAAAoEDmKAIAAAAAAACEFwAAAAAAAMILAAAAAAAAEF4AAAAAAAAILwAA
+                AAAAAIQXAAAAAAAAILwAAAAAAAAQXgAAAAAAAAgvAAAAAAAAQHgBAAAAAAAgvAAAAAAAAADhBQAAAAAA
+                gPACAAAAAABAeAEAAAAAAADCCwAAAAAAAOEFAAAAAACA8AIAAAAAAACEFwAAAAAAgPZspggAJnP4c7+5
+                x/3SHf985298du+Mr7ff/dJSPw7c6x2qQBnfH6V83b+7y/3SUD+23b89SRmW1iZyr0P3mgfdL03Pr/ru
+                dY9QGxC3H1PYrv0czvD8+2S/5/t1aD8IAIX3AxvaJ8ILYDo197ByvF495+vpQNTnbXj+tkYZlpoi6rCt
+                ruu9B4QXJO3HGq4T1nUdr+UM7dMKGJ8AQM9+YEP7ZKohAABUHhVNqPvFn/o9QBKk09XMyD4XBC+TAIwH
+                4QUAALDeQR6G/B4gLm3NzgMACC8AAIBiOPy535wXa+vJ/GKrpf4fIA5j8d5Q64TT0qJIAcyHNV4AYAyz
+                TmwClcXr1MqEGidcZ9kRa1MP5f+z1gvi0PfYlYxWHUjxYkAmmhmvFXHUYVHEAAgvANAE9ZZVDtaO60gu
+                USIAoXincfXU165Yy2aaufBSUbSGeqFwYob9QC7XUddaVN8OMkwoYSpdj/BqumXTTlEmLZ99IrqqM47L
+                tX119xhWOXulx58xvhwQXgCz7yxaaqBs+P57oI5eFg6RSgLQVNeq+/5vfD1bOgRRhJjq8FcH/HFaZPX7
+                tlifYVAyVNfoq2dajnLegP+/0/er3vh+1Zvf+pTfC9991QPO6cVOUv6+aw6zTjvusZ1GgKMVaDvK8bXC
+                nivs/9Xvx9fy2qmjbEb+7bGUzkN7yrPISNPxgtqotx7H99D3CK/RdLE0A74SQE1Pf+Bvn0NP2zmR8pn2
+                e/qCWsB1bFXexzJ4ng3X8VzLntYfTHmGdkC/2Vd92ImIfWInzTmSIm3Fvf5AXXucZONYwrZjZSG81LnG
+                ddbw1VlgW/f1GY7fZnz9+er/T+i/hh676CcVoz77a/j6/9CxyDsWRE317yu3oLK3M7xWqM+g2tS4niL3
+                E77xbzRueqZX+23BW3b9MF8hrR8Q8SVOa4I/43iucTJuOfj8mfF1wp5jWjm0Jr00cf/Ge14b4QUwO2eu
+                O2WAHDu5smHKjjTRfiyqg+oGOBdh12vLFMfSIZnSKdaV0zK+Tlf9HLbIu+bpvDru33dCxMi68wbQCRjU
+                xp2e12kN+32U6zmezlyeZ2/MMl8Qa5ER4fu+SNuxPM8qv/oH5nX/7352OOVadVW28jryc804Nuopp6jP
+                IuulNevIjI+gaJdQzklfrK33SjxdTO0P1hGTU3/XPGWdqD9QQqMrNmZn9F9n5ESqOo1d3koUdcX0VOZR
+                +oMgh7o7wZkZ33trknB0//9ohHN0Z7w/XNdjU+0kwktsnAa7pBzPuCKlO8VB9Lf1sV14+ww74Bm8/aut
+                2kxPhCelqXlEzFBFAo/FfJ47VXnWIo5FXY/w8Y4FhyOU26QxL8jOk15rQdXRtGQ+dV8/0YrwItV7H7KO
+                mhP6I2/ZdVW7PRzDlvxlH6t+I45/43JoK3+mr8phOUY5HFZ21InwHBvKIYY/4y+nDsk1ALIXXfvVmxIr
+                xsfk3w7UZ+Neyw4RXbY6hiHOpq06+6jYInpmrZrqrI5qWk1eoWTFLIegzrRbsO3YcW1H2Ywd41r1ODaq
+                REDcZ6knfJak5T3vc3T8ArrvddaTJNlQbSBIpDiq/AdZ1KnaXLwfILqGE64Tq7zl86vn6QU8z9DT56Tp
+                D6YJhNW68kxtjCO61vWDM94uwGs/SZNstNK84FFl5Ih4yTnGdnFnzMvVVP03Y/x9T9luVPt7JMJLDP81
+                pAC4N077VXUVNuaN264Tcq2jMetoj2qfQeU2CLmW129YjPkyoBuj/OTzPKLKfl7dSytm/UbtX/ZPGJMm
+                +TOy3Jw47UttctyJUW6drPwZhBdA9qKrF9BhyI6qdudvfHbT+FCdRT9AEDRTXEv+3FDX2KuOHZ63Q47f
+                8Y4xGDUC7rPmeR5LdejejrEV4Ng4qsPzHus6ON/hRBRS3s/YU67XmyKk4jhDdhZzzifYTjPEdmz/ABdT
+                5DTF+uklo7eMnmuM30z776k7TaiqZ+mLjVOZgtqBFWLHeaRx95aB469H9aZ26CnjZsw6vd9nK0NPGexW
+                7fPaSXUaRRgoh6Dtu46087ps/wHX6QWImCjOUT/gedq+6+xV12mE9AdHp4iEls/pbHjssTPthUfIOaw4
+                58gK9Qa+53vhFcd+vHvLOXGn4qrP2ynaYSdm39gIGCesgHGiF1cAqz7H8Z1/bOcN37PU1e/920L0Ipbb
+                WHQ1Qspt3HZ3q7Jtx7HzkGvV/P2+ep5rfddqBfQTdgzR0QjwTeqesmsElF1DlZ2/TPohfkDSMcP/QifM
+                nxmXg5OiHKxJ46xYi/T66/XOmP7MBt9kE64y5M3V7/35RRH8VnRmPPbNP0xs62ogtz2D6aYofzd2SqaF
+                2dXn+iFvoOygTH5qkOr7nIvWNAEQMk0g7BpB9TRUA8KJGAPJUHWWk+7rzWnl63Fkxx2mFXYfvikEYc/n
+                PZejBraozoy37Ftp1sqEiK6hOu/xCJ8Le3u5YWpEyNSKsWO6HOP+5Lz6AzEcifa0aWbqc0ERm9A6zEDs
+                PuJxJALv0Rc9iXwf6i1+2y9apk2HCbGFxoQ1Bgd94mGg2uhSgn5nUptK+jwL6m8bk2xT/e29HnHrqOde
+                nmLDNd+6Gm99DZVTOe0cjYxenmzox3z9aOD9TDiftzw6nnUpU/vBkHbYmbbWKO54NGGcsCaVacD9hfbB
+                nkhLI479qc/1w15IBY01Idfqqf5h2rVCXxiFXGtBtddanH4/pN2H2pbXLqP2ySHlEHl8CqjfaWPGII79
+                TOiXZGKfa6e1z6g+WkA5TG3DvutsaJ9EvACyceDmA5wlK4pD7plHP0x4rUHUTkp2Fqrz837eijGlqTlt
+                PYi6D+/gU5vxdJ6keMugHuMevaJ1mIHomg8YQK0og6+6dmTbCcCZJro81+n43vzNTyjXmk+YHonwLCfV
+                4Obk1GYXAhy5ILq+trIQ4dyLPmdAOh23RHG4VVl7bawmQt7Ue9aF+PuCpYT9Tm8Gz7OkruN1rDoh5Vj3
+                XSPo/P56aiQ4hz/KVZuVnalydjzXacawz+a0upnSv/nb4eGI91tP2Q6njkfq/1u+PjgsWtHxC6Eo9qfG
+                u70xyy7oWgciXuuWmNfq+USXFTWqqfpUfz8RNXo7db2let5myNgyVRyq+vWOGc2IY3Fk0aWuc8j33I0Y
+                U2Snvhj3lIO3nFtp+gSEF0A2tH0DfqyF8QFiZdq1/APqcoL7dXyDzdRBIuoifPV3gwnOUeH4ppGJKOWf
+                gTMU5tjXfOI2ru20E167E8N2elMc3nG0phFnYIsx2M+iza4682FiRZWvE/K5KGXlxK2fAKFrhazjCBLs
+                yzFtp+NzfveHOKNpnmc5wFnpTBFek+7Z8hyDCX8+nHA/Uc8hMmrjcezH/4KnH2dLkIB22MmxHXZjOM3H
+                fW2rGdLnesvMDoucTGnrgwjllue1vNkix3V0MkE/0fe9EJv2YsiJmmFR2Zz/RYcdUxyuTtUOEtYBttpM
+                UA5SfNneOoiwhCJypt6AcrAQXgDF00rSoAPESi/mtXpJpsiogdXvcE2L+PRjXiazjmqG+Aet+Rhl73eo
+                YhOU3CFJRr+AATjO56L+7VIEMe2f8nEkwT2dFDNcdxPm2MZwnJtT6nRPwEuY5QTlcFiErxsIegnQTXid
+                I6reJl3HSijW/fXam1KOgyh9hmwjnmPSvTQzOEcWeJ87apKNVooXPO0kjnZG7TDuvfanCO/WlJ+jjnft
+                mOU262u1fHWUdDuS9pSfsxzHk9SvPWXMaPp8p6QZbb19V5TIcho7TRUhR3gBpCTA0eqkOF1nyrUWfNfq
+                Jb1QQMTHmvL3cfdYGhhQfd2ojlqIwE67MbXl68S7s7KdKQNikjqtBYjIRkbP4k/KkHWb3S/Wr0GcJkD7
+                MV5S+B2q4yna6GHPcWKKrXZTXOeI5zrHJlwn7dRa7z3WQhLvrLaNBFn1/Dba0CGzatwkG2mSagS0w06e
+                7TDBi0BnivDyv5haSlgHJyL0ed4xsJ/yWoMY10ozjseNxsTt9+2U4/ogTv2mKIcTYkr0dILdxbVTK01/
+                gPACSE/D55gk3oMoIKow6Voig/2O+mHnzoCh7hWnnIRBFIfI5wylFRZBZe6kWeAfMCVuFjhRbVMkiMD5
+                HFV7hs/RjHOfAc5NK2I59Gf4DA3fS4DlPK6TQXtzJtiMXyTItWCnpFCOkX3V3y5b6hwHE2wbkSVep3La
+                1gStFM6oSe0wiiOfZXvq6XAtVff1rNpVzHF8mMAG0ghr7/X8L+sWs7LVuOWQwHfKzJ9hA2WA9NRjDCJR
+                sCd0Gv6d7N+ckYNVJbybnI6mAYUMLi2fSDqecZlnYTuOiLBOJgcH3clACITta5OKoCl6MRypptdxDnnG
+                RkShmmW/Y+d0neYs+xy1OXDL57TWxz+7/zdQ9dUPs68J5xjtX6TOIf+vl8MUw3WOntogvC7WpkIdi2Cf
+                cYWXVWA7tDNuq4sxRVqU/nFSvyAybLuRX6CKlTToWZbbniyydM5AWE8VhRmWQz3j9nsyq3tDeAHoR1GR
+                olpFy7sfILAOZewMRSnzrES7VYSTJDbuFZTlgJ0lLf91Eg6o8jxHcqjTMlMLcHCOeQSWFeCwyrYnN0tt
+                hb21jnAO+fuOOsfxHJ+36xH67SDhJVIk1YgjNEwkg6ndg7wcdd3alaZYooIgvADMFmg4dukH82XXAet5
+                HJ4NwivAWe9p+jgNajS28EpKO0R4lfllhpOxMz8IaZPybf1ez2bITV9ZSidZRgmaYcLJc449qq7855Df
+                95X4OpZT+fU8wissur5OeNFcK9E/2jPwDUzpTyrnzyC8ALKlnsE5ahE7VGcWm8pWFK/wGi369zl065yh
+                DN68Bg08jRnbzqyJlJGuSCdJOfL1lA7P+Nlkko3FgKiL47mGfIY8IiqzrPehz/YP5WVQqmzlFL22Ek/+
+                rTR67v9N3MxUCZsD6hxSfHV8NiCnH/bzmHYY8JJH3tMBj31615EmTWQyzHE8mjVDX/tdyLDv3WBrvsh3
+                Xm1K0sxz2qumwqtWFX8G4QWQHq/zVs9gcLAiOreNCetMIP6g63WYW2OHOSCpRm9GA08qoaEWbFsFFqPj
+                u5+06wxm8XbaL6BvSVDOj3juTZ5vmvCapdC1MhS6k67TzOF5JgoWWfRu2XfF+jWwoWulQs4hpyD2A84h
+                6/FITo/jFV5Nr/AS6ZJqBI0R9QzGiML6lIB1NVaUup7AtLVqQ4/gslK+NGnGfK7jono4eQlrnSCrIUA2
+                jkmYcxfXqdszyblRb4Bjbfo7yVGXb+w9x3zF69Hr6DQ9i6299elkvCbEL9oXZ+hUzNxJ8tlmmnawkPXz
+                KPteJ7wSnqrrsxN/u+lP+f9Z2E5jhhn7vNex0lxHftbb5/j7vml9kWdjXy/1kHMsTDiHlYPIn9SHjx3O
+                2njD6oA9/ZJmTc1tPMoJO8M+rqnRtfpZXcs3ji8IQ1Aiy5mRP6NtOSC8ANJ3Hsu+TrSdwtmKMth6r9VJ
+                cevjt8fjo1bxquz5B84UGfCSOGGJ61PZW0eDMvRvSJ108JvFs3gd0DT7Ufk30mxO+P9Rf5BCpLzpOQ4G
+                OInDLGzHPV7wXOfoFBttpagDb3/Tm9AftaY4a2HTWqOew58mvZ5zO+kGlKf3fu0Ue0jlPR7l2ac0I24+
+                HWTnByPUs3+/voMJr3VnzGsl7ivVjAxvu7IMHnfT2GrbVw51XR8Y4QWQ/UBaEwmmiahOPkqn2fENDncm
+                uNaib6DvVSHEP8Vh8e/V1Bb5JNXwntMavwFPYH86DDSdDNrBfpFdAoww4dVLYScTN8NVduT9/05CZ9F7
+                jqH/ntV9dH3O276E16lNEXDdtM8T4IxOEorTbHkY4fu6xt2Nv80v+OwobT/T9ZVDN2E7tDQpK2+99uI6
+                58peOxHa9jHfS4bYtp7iWkn6ynnf55wcE8Vk6TsNU9rqHl/7sTPY4xThBaC5035CbHwzdzTmINeNeK2l
+                AEdof4xr7fHd61AkfCtfQvo+h6XtE6ezWE/X9Q/AMevz6IyESlLx2vU5lXHawaKYwVv2gClTvQztJGia
+                X8fnLNpxHDhVZl6ntxtie0G2E+c6dwnfNglBL2Dc38n1T4MUz7Pf54zaAQ6i7ROR8xOcTW/ZDELO0Zxy
+                jqz30Esj3nsifVKNSeNRK8F41NOkT1n22U5D2d98jLZvi+gzOrx9aS2OrXuuFZV2ir5yPuC5tBgHUtZv
+                K06kMaR+tS4HhBdAdrR8TpDsQO6fNIVATfO5K+4gpzKLDXwO113TBiPVoW3opEjQsVqux3wOcy1DZ33S
+                wOOfrja1PpXt3KvhINPx2aZsB49Mc15URCSOgxQHr4MzSLu5qFrn54ScfyxA2wEO3P4pZSCnF97vq1N5
+                v4cj2o68zmBaFFxd517fPTpTXsC0PG1j/DwHpzmHAf3bMMRm/VM4uxNeVIR9zn+O3oRz1EIEW154782a
+                QT8TNB7dG2E8ulNotl2GEv79APG1GEFAxupTlGjtBrTdabbuH1sHEfuRbhyfwfOCauB7edDVOcoTs367
+                02x1Qv22dZ+9Q1ZDgAwdaLmvjK8jkAOqo1II22LjQtKWr9MYqr+LssjUEuuzc7VVx933Xaum/laes+4f
+                nHPeQNQEegEOqDPLQU1luWqJjVPYWh7b8Tq9TbFxX6KB+ru2Bu3Ab5sNJQj6aoD1twO/bcZpB2Ka8y9m
+                s/l1T6y9qZV1d8gv4lXmsp5XCLi/66jf2T5H0gp43oGYMt0rxHY66nd9n+3U1fn8wkf+f3NaWnZPvdbG
+                4kilaQ+7TjOgf7NComonlX00PU7oeLNjR6xFoL3Opu0V0fK8vnTtTZWF0nuOlq9MB0X0gQGZVMOEZZbj
+                UVOVySzGo1nTCuhTpCCylf0NfO2pHTTeRWn/8sWme96ax47CbD1sbB2qekxyrbHPML6Ofz1jU2xMeNLL
+                c5uHnOp3bKth5dAKqN+eEnFaQ8QLIGMHWnUGg5AO3/Yc7QDHuSEiTnvxZOfyv+X1X6sfMAgNleg6Rq0F
+                OtR+OjnYzjFV//6Im3ewH9en30GylS0MNWkHy54XA8Ln3AW1A69tOuqzWU3/8jv/vRnYSS0omqXqtCk2
+                rj3q+MqgG+Dc2kqkLCe0nXqA7fQCRNdAXedkxP7NXzeTrlPz1+uU67TExi0Wep5z+qcHBgmCdoAT7j2H
+                5e8HC2wqfpFlZ/m2XpV1I+F4lHU7zKpP8bdfS2xMFNVNO965f3sg4CWW39aDxtbxOO74ynLatToB/Zb/
+                uToBoqurPm+677TsHtcG1G9YOfhFV9uUckB4AcyuA2lN63A9nbLsNK6NO+iqa92iOicn4sdGDgyia6Kz
+                MvAN2v0crz12zIcRbUc6FHt1my6qbHNvjHYwHDsWaacCBjiZq7afVTmptmr7HISgvzvucf7FrOo0ge2M
+                y9uKU94e8RX3OlPrVT1vQ0yf+hcqSieI/qBzZG1raV/y9GbQDpdijkezaodZ9SkHItZv6vFORU/qEetl
+                VG6ecbwRVXipax2OaPv+NmB6pCtIhFoxy6FhQqRrDFMNIXce++Yfyilbmwy65anTfUI6ENnRH1PzsS3V
+                qfqjFEHZd3qeTmcY8VrSuTuu1tE0A+7X8VxvaZbPHfL5ac8R9Tret7KDKYNtrDKcQD9PUePbLHZsN5Zv
+                gB+o+zo54bmdKeXiJLi92J/3tIOxbQa1g6DpXlnVYSeOA5RA1NWn3aNqcwfUVKVx+6wHOBCppr35bGdc
+                1o2AdmlncR11rX0eO91wHXWt5Zjn3qv6Tf+0KjvE7jM/R0KsuOWoplPW1M8nMu4H445HSdphnH5eZPF5
+                VU57VZ8yfpa675yDkL47bh152673WnVPXxxUbk1f2UZ9qbHXs42JJYKnftox7dfylc1M7Trj+g0aMxxP
+                /S7l9BxxPj+xvE1yfgEAZo7q7NdNVdLtzS8AAMyk/1/wi7i4L97UORyvCGMtNYxhqiEAwHoyzYAHAADG
+                MJ7uNz6SJCvqeb4fIroA4QUAEIDKgNfy/KpLqQAAVAMlkrxT4tpp9+CjVAHhBQAQjFd05ZZUAwAAtCFo
+                D75pe4YF7asYugcfVBfWeAEArA2ep8Ta/P5u2TJGAQBApLHgqNi41cDqPoRqH7ZFEb6v4njPOqaqA8IL
+                ACBgoJWDqO35VT3LPXUAAMB48RUFRBeEwlRDAIA1OupoI7oAAKqL2lMqzh6Zkp5YeWmH6IJAiHgBAAAA
+                AITg26/Ou6/UQKztk9nnhR1M4/8XYADaKhfaZ9ksfAAAAABJRU5ErkJggg==
+</property>
+        </structure>
+    </list-property>
+</report>
