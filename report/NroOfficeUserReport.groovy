@@ -37,7 +37,7 @@ import com.google.gdata.data.appsforyourdomain.EmailList
 
 import java.text.*
 
-public class NroUserReport implements ReportDataSetBuilder {
+public class NroOfficeUserReport implements ReportDataSetBuilder {
 
 	static final String DEFAULT_REQUESTER_ID = "3000"
 	static final Language DEFAULT_LANGUAGE = new Language(id:  1)
@@ -45,7 +45,7 @@ public class NroUserReport implements ReportDataSetBuilder {
     static final String SEC_STATUS_META_GROUP = "USER_2ND_STATUS"
 	static final String NRO_TYPE_ID = "402894ad50f651a10150f66501410049"
 	static final String NRO_OFFICE_TYPE_ID = "402894ad50f651a10150f665d78f004e"
-	static final String ScriptName = "NroUserReport.groovy"
+	final static String ScriptName = "NroOfficeUserReport.groovy"
 
     private ApplicationContext context
     private UserDataService userDataService
@@ -137,7 +137,7 @@ public class NroUserReport implements ReportDataSetBuilder {
             reportTable.row.add(row)
 
         } else {
-			reportTable.setName("NroUserReport")
+			reportTable.setName("NroOfficeUserReport")
 			
 			def messages = validateParameters(organizations, roles, status, secStatus)
 			println("=== $ScriptName validateParameters, responce: $messages")
@@ -225,8 +225,8 @@ public class NroUserReport implements ReportDataSetBuilder {
 			for(def String orgId : organizationIds) {
 				def Organization organization = organizationService.getOrganizationLocalized(orgId, null, language)
 				if (organization?.organizationTypeId) {
-					if (organization.organizationTypeId != NRO_TYPE_ID) {
-						violations.add "Only NRO offices are accepted for parameter 'NRO'. ${organization.name} is not an NRO."
+					if (organization.organizationTypeId != NRO_OFFICE_TYPE_ID) {
+						violations.add "Only NRO offices are accepted for parameter 'NRO office'. ${organization.name} is not an NRO Office."
 					}
 				}
 			}
@@ -247,7 +247,7 @@ public class NroUserReport implements ReportDataSetBuilder {
 		println("=== $ScriptName getOfficeNamesByOfficeId: NroOfficeId: $NroOfficeId")
 		if (NroOfficeId) {
 			Organization NroOffice = organizationService.getOrganizationLocalized(NroOfficeId, DEFAULT_REQUESTER_ID, DEFAULT_LANGUAGE)
-			List<Organization> Nro = organizationService.getParentOrganizationsLocalized(NroOfficeId, DEFAULT_REQUESTER_ID, 0, 1, DEFAULT_LANGUAGE)			
+			List<Organization> Nro = organizationService.getParentOrganizationsLocalized(NroOfficeId, DEFAULT_REQUESTER_ID, 0, 1, DEFAULT_LANGUAGE)
 			String NroName = Nro.get(0).name
 			String OfficeName = NroOffice.name
 			return NroName + "\n" + OfficeName
@@ -255,9 +255,9 @@ public class NroUserReport implements ReportDataSetBuilder {
 			return ""
 		}
 	}
-	
+		
     private String getCompanyNamesByUserId(String userId) {
-        def orgs = organizationService.getOrganizationsForUser(userId, DEFAULT_REQUESTER_ID, 0, 100) as List<Organization>
+        def orgs = organizationService.getOrganizationsForUser(userId, "3000", 0, 100) as List<Organization>
         orgs.sort(true, { a,b -> a.id <=> b.id })
         def result = []
         orgs.each { result += it.abbreviation ?: it.name }
