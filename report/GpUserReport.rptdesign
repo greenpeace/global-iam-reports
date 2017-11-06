@@ -469,7 +469,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		<reportQuery>
-         <reportName>NRO_OFFICE_USER_REPORT</reportName>
+         <reportName>GpUserReport</reportName>
          <queryParams> 
           <entry key="ROLE">
                &amp;?ROLE_XML?&amp;
@@ -874,7 +874,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		<reportQuery>
-         <reportName>NRO_OFFICE_USER_REPORT</reportName>
+         <reportName>GpUserReport</reportName>
          <queryParams> 
           <entry key="ROLE">
                &amp;?ROLE_XML?&amp;
@@ -1202,7 +1202,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		    <reportQuery>
-		    <reportName>NRO_OFFICE_USER_REPORT</reportName>
+		    <reportName>GpUserReport</reportName>
             <queryParams>
                 <entry key="GET_VALUES">
                     <value>STATUS</value>
@@ -1335,7 +1335,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		    <reportQuery>
-		    <reportName>NRO_OFFICE_USER_REPORT</reportName>
+		    <reportName>GpUserReport</reportName>
             <queryParams>
                 <entry key="GET_VALUES">
                     <value>SECONDARY_STATUS</value>
@@ -1468,7 +1468,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		    <reportQuery>
-		    <reportName>NRO_OFFICE_USER_REPORT</reportName>
+		    <reportName>GpUserReport</reportName>
             <queryParams>
                 <entry key="GET_VALUES">
                     <value>ORGANIZATION</value>
@@ -1601,7 +1601,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		    <reportQuery>
-		    <reportName>NRO_OFFICE_USER_REPORT</reportName>
+		    <reportName>GpUserReport</reportName>
             <queryParams>
                 <entry key="GET_VALUES">
                     <value>ROLE</value>

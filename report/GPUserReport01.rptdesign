@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
-    <property name="createdBy">Eclipse BIRT Designer Version 4.7.0.v201706142203</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.7.0.v201706222054</property>
     <simple-property-list name="includeResource">
         <value>resources/GPUserReport01</value>
         <value>resources/GPUserReport01_ru</value>
@@ -1795,7 +1795,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
         </grid>
         <table id="12">
             <property name="marginBottom">15pt</property>
-            <property name="width">100%</property>
+            <property name="width">11.510416666666666in</property>
             <property name="dataSet">Data Set Details</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -1895,6 +1895,13 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
                 </structure>
+                <structure>
+                    <property name="name">EMPLOYEE_TYPE</property>
+                    <text-property name="displayName">EMPLOYEE_TYPE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["EMPLOYEE_TYPE"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
             </list-property>
             <list-property name="sort">
                 <structure>
@@ -1904,28 +1911,28 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                 </structure>
             </list-property>
             <column id="67">
-                <property name="width">14%</property>
+                <property name="width">1.7395833333333333in</property>
             </column>
-            <column id="70">
-                <property name="width">12%</property>
+            <column id="901">
+                <property name="width">1.6770833333333333in</property>
             </column>
             <column id="71">
-                <property name="width">16%</property>
+                <property name="width">1.34375in</property>
             </column>
             <column id="72">
-                <property name="width">8%</property>
+                <property name="width">1.4375in</property>
+            </column>
+            <column id="910">
+                <property name="width">1.4375in</property>
             </column>
             <column id="392">
-                <property name="width">11%</property>
+                <property name="width">1.7708333333333333in</property>
             </column>
             <column id="73">
-                <property name="width">18%</property>
+                <property name="width">1.7395833333333333in</property>
             </column>
             <column id="74">
-                <property name="width">10%</property>
-            </column>
-            <column id="75">
-                <property name="width">11%</property>
+                <property name="width">1.7395833333333333in</property>
             </column>
             <header>
                 <row id="310">
@@ -1959,11 +1966,11 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             <text-property name="text" key="table.col.name">Name</text-property>
                         </label>
                     </cell>
-                    <cell id="358">
+                    <cell id="896">
                         <property name="style">header-cell</property>
                         <property name="whiteSpace">nowrap</property>
-                        <label id="21">
-                            <text-property name="text" key="table.col.title">Title</text-property>
+                        <label id="902">
+                            <text-property name="text">Login</text-property>
                         </label>
                     </cell>
                     <cell id="359">
@@ -1978,6 +1985,13 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                         <property name="whiteSpace">nowrap</property>
                         <label id="27">
                             <text-property name="text" key="table.col.employee.id">Employee ID</text-property>
+                        </label>
+                    </cell>
+                    <cell id="905">
+                        <property name="style">header-cell</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <label id="911">
+                            <text-property name="text">Employee Type</text-property>
                         </label>
                     </cell>
                     <cell id="388">
@@ -1999,13 +2013,6 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                         <property name="whiteSpace">nowrap</property>
                         <label id="31">
                             <text-property name="text" key="table.col.last.login">Last Login</text-property>
-                        </label>
-                    </cell>
-                    <cell id="363">
-                        <property name="style">header-cell</property>
-                        <property name="whiteSpace">nowrap</property>
-                        <label id="33">
-                            <text-property name="text" key="table.col.login">Login</text-property>
                         </label>
                     </cell>
                 </row>
@@ -2063,7 +2070,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                                 <text-property name="content" key="table.group.users"><![CDATA[Users: <VALUE-OF>row['STATUS_USER_COUNT']</VALUE-OF>]]></text-property>
                             </text>
                         </cell>
-                        <cell id="380">
+                        <cell id="899">
                             <property name="borderBottomStyle">solid</property>
                             <property name="borderBottomWidth">1px</property>
                         </cell>
@@ -2072,6 +2079,10 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             <property name="borderBottomWidth">1px</property>
                         </cell>
                         <cell id="382">
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                        </cell>
+                        <cell id="908">
                             <property name="borderBottomStyle">solid</property>
                             <property name="borderBottomWidth">1px</property>
                         </cell>
@@ -2087,10 +2098,6 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             <property name="borderBottomStyle">solid</property>
                             <property name="borderBottomWidth">1px</property>
                         </cell>
-                        <cell id="385">
-                            <property name="borderBottomStyle">solid</property>
-                            <property name="borderBottomWidth">1px</property>
-                        </cell>
                     </row>
                 </footer>
             </group>
@@ -2103,10 +2110,10 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             <property name="resultSetColumn">FIRST_NAME</property>
                         </data>
                     </cell>
-                    <cell id="41">
+                    <cell id="898">
                         <property name="style">details-cell</property>
-                        <data id="42">
-                            <property name="resultSetColumn">TITLE</property>
+                        <data id="903">
+                            <property name="resultSetColumn">LOGIN</property>
                         </data>
                     </cell>
                     <cell id="43">
@@ -2120,6 +2127,13 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                         <property name="textAlign">center</property>
                         <data id="48">
                             <property name="resultSetColumn">EMPLOYEE_ID</property>
+                        </data>
+                    </cell>
+                    <cell id="907">
+                        <property name="style">details-cell</property>
+                        <property name="textAlign">center</property>
+                        <data id="914">
+                            <property name="resultSetColumn">EMPLOYEE_TYPE</property>
                         </data>
                     </cell>
                     <cell id="389">
@@ -2152,12 +2166,6 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             <property name="fontSize">10pt</property>
                             <property name="textAlign">center</property>
                             <property name="resultSetColumn">LAST_LOGIN</property>
-                        </data>
-                    </cell>
-                    <cell id="53">
-                        <property name="style">details-cell</property>
-                        <data id="54">
-                            <property name="resultSetColumn">LOGIN</property>
                         </data>
                     </cell>
                 </row>
