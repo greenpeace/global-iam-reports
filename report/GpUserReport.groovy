@@ -33,7 +33,6 @@ import org.openiam.idm.srvc.user.ws.UserDataWebService
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
 
-
 import com.google.gdata.data.appsforyourdomain.EmailList
 
 import java.text.*
