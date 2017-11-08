@@ -469,7 +469,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		<reportQuery>
-         <reportName>GpUserReport</reportName>
+         <reportName>GP_USER_REPORT</reportName>
          <queryParams> 
           <entry key="ROLE">
                &amp;?ROLE_XML?&amp;
@@ -718,7 +718,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
             <list-property name="privateDriverProperties">
                 <ex-property>
                     <name>xmlQueryText</name>
-                    <value>table0#-TNAME-#table0#:#[/soap:Envelope/soap:Body/ns2:executeQueryResponse/return/ReportData/ns2:reportTable[@name='GpUserReport']/row]#:#{FIRST_NAME;STRING;/column[@name='FIRST_NAME']/value},{MIDDLE_INIT;STRING;/column[@name='MIDDLE_INIT']/value},{LAST_NAME;STRING;/column[@name='LAST_NAME']/value},{TITLE;STRING;/column[@name='TITLE']/value},{CONTRACTED_OFFICE;STRING;/column[@name='CONTRACTED_OFFICE']/value},{STATUS;STRING;/column[@name='STATUS']/value},{SECONDARY_STATUS;STRING;/column[@name='SECONDARY_STATUS']/value},{EMPLOYEE_ID;STRING;/column[@name='EMPLOYEE_ID']/value},{EMAIL_ADDRESS;STRING;/column[@name='EMAIL_ADDRESS']/value},{LAST_LOGIN;STRING;/column[@name='LAST_LOGIN']/value},{LOGIN;STRING;/column[@name='LOGIN']/value},{PHONE;STRING;/column[@name='PHONE']/value},{MANAGER;STRING;/column[@name='MANAGER']/value},{SKYPE;STRING;/column[@name='SKYPE']/value},{ERROR;STRING;/column[@name='ERROR']/value},{EMPLOYEE_TYPE;STRING;/column[@name='EMPLOYEE_TYPE']/value},{CAMPAIGN;STRING;/column[@name='CAMPAIGN']/value},{SECONDARY_OFFICE;STRING;/column[@name='SECONDARY_OFFICE']/value}#:#&lt;"ns2","urn:idm.openiam.org%srvc%report%service";"soap","http:%%schemas.xmlsoap.org%soap%envelope%"></value>
+                    <value>table0#-TNAME-#table0#:#[/soap:Envelope/soap:Body/ns2:executeQueryResponse/return/ReportData/ns2:reportTable[@name='GpUserReport']/row]#:#{FIRST_NAME;STRING;/column[@name='FIRST_NAME']/value},{MIDDLE_INIT;STRING;/column[@name='MIDDLE_INIT']/value},{LAST_NAME;STRING;/column[@name='LAST_NAME']/value},{TITLE;STRING;/column[@name='TITLE']/value},{CONTRACTED_OFFICE;STRING;/column[@name='CONTRACTED_OFFICE']/value},{STATUS;STRING;/column[@name='STATUS']/value},{EMPLOYEE_ID;STRING;/column[@name='EMPLOYEE_ID']/value},{EMAIL_ADDRESS;STRING;/column[@name='EMAIL_ADDRESS']/value},{LAST_LOGIN;STRING;/column[@name='LAST_LOGIN']/value},{LOGIN;STRING;/column[@name='LOGIN']/value},{PHONE;STRING;/column[@name='PHONE']/value},{MANAGER;STRING;/column[@name='MANAGER']/value},{SKYPE;STRING;/column[@name='SKYPE']/value},{ERROR;STRING;/column[@name='ERROR']/value},{EMPLOYEE_TYPE;STRING;/column[@name='EMPLOYEE_TYPE']/value},{CAMPAIGN;STRING;/column[@name='CAMPAIGN']/value},{SECONDARY_OFFICE;STRING;/column[@name='SECONDARY_OFFICE']/value}#:#&lt;"ns2","urn:idm.openiam.org%srvc%report%service";"soap","http:%%schemas.xmlsoap.org%soap%envelope%"></value>
                 </ex-property>
                 <ex-property>
                     <name>operationTrace</name>
@@ -874,7 +874,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		<reportQuery>
-         <reportName>GpUserReport</reportName>
+         <reportName>GP_USER_REPORT</reportName>
          <queryParams> 
           <entry key="ROLE">
                &amp;?ROLE_XML?&amp;
@@ -1202,7 +1202,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		    <reportQuery>
-		    <reportName>GpUserReport</reportName>
+		    <reportName>GP_USER_REPORT</reportName>
             <queryParams>
                 <entry key="GET_VALUES">
                     <value>STATUS</value>
@@ -1335,7 +1335,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		    <reportQuery>
-		    <reportName>GpUserReport</reportName>
+		    <reportName>GP_USER_REPORT</reportName>
             <queryParams>
                 <entry key="GET_VALUES">
                     <value>SECONDARY_STATUS</value>
@@ -1468,7 +1468,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		    <reportQuery>
-		    <reportName>GpUserReport</reportName>
+		    <reportName>GP_USER_REPORT</reportName>
             <queryParams>
                 <entry key="GET_VALUES">
                     <value>ORGANIZATION</value>
@@ -1601,7 +1601,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
 	<SOAP-ENV:Body>
 		<m:executeQuery xmlns:m="urn:idm.openiam.org/srvc/report/service">
 		    <reportQuery>
-		    <reportName>GpUserReport</reportName>
+		    <reportName>GP_USER_REPORT</reportName>
             <queryParams>
                 <entry key="GET_VALUES">
                     <value>ROLE</value>
