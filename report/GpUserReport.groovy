@@ -173,8 +173,8 @@ public class GpUserReport implements ReportDataSetBuilder {
 			for (UserEntity user : users) {
 				def userId = user.id
 				List<Organization> NroOfficeList = organizationService.getOrganizationsForUserByTypeLocalized(userId, "300", NRO_OFFICE_TYPE_ID, DEFAULT_LANGUAGE)					
-				Map<String,UserAttributeEntity> UserAttributes = user.getUserAttributes()
-				Set<EmailAddressEntity> EmailAddressList = user.getEmailAddresses()					
+				Map<String,UserAttributeEntity> UserAttributes = user?.getUserAttributes()
+				Set<EmailAddressEntity> EmailAddressList = user?.getEmailAddresses()					
 				String SecondOfficeId = getUserAttribute(UserAttributes, "Secondary office")					
 				Organization ContractedOffice = NroOfficeList.findAll { it.id != SecondOfficeId }[0]
 				String EmailType = "Default" 
@@ -373,7 +373,7 @@ public class GpUserReport implements ReportDataSetBuilder {
 
 	private String getEmail( Set<EmailAddressEntity> EmailAddressList, String EmailType) {
 		def EmailAddress = ""
-		if (EmailAddressList) {
+		if (EmailAddressList.size() > 0) {
 			switch (EmailType){
 				case "Default" :
 					EmailAddress =  EmailAddressList.find{it.getIsDefault()}.getEmailAddress() ?: "Not Default Email Set"
