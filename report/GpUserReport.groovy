@@ -33,7 +33,6 @@ import org.openiam.idm.srvc.user.ws.UserDataWebService
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
 
-
 import com.google.gdata.data.appsforyourdomain.EmailList
 
 import java.text.*
@@ -174,30 +173,65 @@ public class GpUserReport implements ReportDataSetBuilder {
 			for (UserEntity user : users) {
 				def userId = user.id
 				List<Organization> NroOfficeList = organizationService.getOrganizationsForUserByTypeLocalized(userId, "300", NRO_OFFICE_TYPE_ID, DEFAULT_LANGUAGE)					
-				Map<String,UserAttributeEntity> UserAttributes = user.getUserAttributes()
-				Set<EmailAddressEntity> EmailAddressList = user.getEmailAddresses()					
+				Map<String,UserAttributeEntity> UserAttributes = user?.getUserAttributes()
+				Set<EmailAddressEntity> EmailAddressList = user?.getEmailAddresses()					
 				String SecondOfficeId = getUserAttribute(UserAttributes, "Secondary office")					
 				Organization ContractedOffice = NroOfficeList.findAll { it.id != SecondOfficeId }[0]
 				String EmailType = "Default" 
 				def ReportRow row = new ReportRow()
 				row.column.add(new ReportColumn('FIRST_NAME', user.firstName))
+				println("=== $ScriptName FIRST_NAME: ${user.firstName}")
+				
 				row.column.add(new ReportColumn('MIDDLE_INIT', user.middleInit))
+				println("=== $ScriptName MIDDLE_INIT: ${user.middleInit}")
+				
 				row.column.add(new ReportColumn('LAST_NAME', user.lastName))
+				println("=== $ScriptName LAST_NAME: ${user.lastName}")
+				
 				row.column.add(new ReportColumn('TITLE', user.title))
-				row.column.add(new ReportColumn('CONTRACTED_OFFICE', getOfficeNamesByOfficeId(ContractedOffice.id)))
+				println("=== $ScriptName TITLE: ${user.title}")
+				
+				row.column.add(new ReportColumn('CONTRACTED_OFFICE', getOfficeNamesByOfficeId(ContractedOffice?.id)))
+				println("=== $ScriptName CONTRACTED_OFFICE: ${ContractedOffice?.id}")
+				
 				row.column.add(new ReportColumn('SECONDARY_OFFICE', getOfficeNamesByOfficeId(SecondOfficeId)))
+				println("=== $ScriptName SECONDARY_OFFICE: $SecondOfficeId")
+				
 				row.column.add(new ReportColumn('STATUS', user.status?.value))
+				println("=== $ScriptName STATUS: ${user.status?.value}")
+				
 				row.column.add(new ReportColumn('SECONDARY_STATUS', user.secondaryStatus?.value))
+				println("=== $ScriptName SECONDARY_STATUS: ${user.secondaryStatus?.value}")
+				
 				row.column.add(new ReportColumn('EMPLOYEE_TYPE', user.getEmployeeType()?.description))
+				println("=== $ScriptName EMPLOYEE_TYPE: ${user.getEmployeeType()?.description}")
+				
 				row.column.add(new ReportColumn('EMPLOYEE_ID', user.employeeId))
+				println("=== $ScriptName EMPLOYEE_ID: ${user.employeeId}")
+				
 				row.column.add(new ReportColumn('EMAIL_ADDRESS', getEmail(EmailAddressList, EmailType)))
+				println("=== $ScriptName EMAIL_ADDRESS: " + getEmail(EmailAddressList, EmailType))
+				
 				row.column.add(new ReportColumn('PHONE', getDefaultPhone(userId)))
+				println("=== $ScriptName PHONE: "+ getDefaultPhone(userId))
+				
 				row.column.add(new ReportColumn('CAMPAIGN', getUserAttribute(UserAttributes, "Campaign")))
+				println("=== $ScriptName CAMPAIGN: " + getDefaultPhone(userId))
+				
 				row.column.add(new ReportColumn('SKYPE', getUserAttribute(UserAttributes, "Skype")))
+				println("=== $ScriptName SKYPE: " + getDefaultPhone(userId))
+				
 				Login l = loginDataWebService.getPrimaryIdentity(userId)?.principal
+				
 				row.column.add(new ReportColumn('LAST_LOGIN', l?.lastLogin ? dateFormat.format(l.lastLogin) : null))
+				//println("=== $ScriptName LAST_LOGIN: " + dateFormat.format(l.lastLogin) ?: "")
+				
 				row.column.add(new ReportColumn('LOGIN', l?.login))
+				println("=== $ScriptName LOGIN: ${l?.login}")
+				
 				row.column.add(new ReportColumn('MANAGER', getSupervisorNameyUserId(userId)))
+				println("=== $ScriptName MANAGER: " + getSupervisorNameyUserId(userId))
+				
 				reportTable.row.add(row)
 			}
         }
@@ -339,7 +373,7 @@ public class GpUserReport implements ReportDataSetBuilder {
 
 	private String getEmail( Set<EmailAddressEntity> EmailAddressList, String EmailType) {
 		def EmailAddress = ""
-		if (EmailAddressList) {
+		if (EmailAddressList.size() > 0) {
 			switch (EmailType){
 				case "Default" :
 					EmailAddress =  EmailAddressList.find{it.getIsDefault()}.getEmailAddress() ?: "Not Default Email Set"
