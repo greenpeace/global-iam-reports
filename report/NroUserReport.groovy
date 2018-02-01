@@ -13,7 +13,6 @@ import org.openiam.idm.srvc.continfo.dto.EmailAddress
 import org.openiam.idm.srvc.lang.dto.Language
 import org.openiam.idm.srvc.meta.dto.MetadataType
 import org.openiam.idm.srvc.meta.ws.MetadataWebService
-import org.openiam.idm.srvc.meta.domain.MetadataTypeEntity
 import org.openiam.idm.srvc.org.service.OrganizationDataService
 import org.openiam.idm.srvc.continfo.domain.PhoneEntity
 import org.openiam.idm.srvc.org.dto.Organization
@@ -28,28 +27,20 @@ import org.openiam.idm.srvc.role.dto.Role
 import org.openiam.idm.srvc.role.ws.RoleDataWebService
 import org.openiam.idm.srvc.user.domain.UserEntity
 import org.openiam.idm.srvc.user.service.UserDataService
-import org.openiam.idm.srvc.user.domain.UserAttributeEntity
-import org.openiam.idm.srvc.user.ws.UserDataWebService
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
-
-import com.google.gdata.data.appsforyourdomain.EmailList
 
 import java.text.*
 
 public class NroUserReport implements ReportDataSetBuilder {
 
-	static final String DEFAULT_REQUESTER_ID = "3000"
-	static final Language DEFAULT_LANGUAGE = new Language(id:  1)
-    static final String STATUS_META_GROUP = "USER"
-    static final String SEC_STATUS_META_GROUP = "USER_2ND_STATUS"
-	static final String NRO_TYPE_ID = "402894ad50f651a10150f66501410049"
+    final static String STATUS_META_GROUP = "USER"
+    final static String SEC_STATUS_META_GROUP = "USER_2ND_STATUS"
 	static final String NRO_OFFICE_TYPE_ID = "402894ad50f651a10150f665d78f004e"
-	static final String ScriptName = "NroUserReport.groovy"
+	final static String ScriptName = "NroUserReport.groovy"
 
     private ApplicationContext context
     private UserDataService userDataService
-	private UserDataWebService userDataWebService
     private OrganizationDataService organizationService
     private RoleDataWebService roleDataWebService
     private LoginDataWebService loginDataWebService
@@ -64,7 +55,6 @@ public class NroUserReport implements ReportDataSetBuilder {
         println "=== $ScriptName data source, request: " + query.queryParams.values().join(", ")
 		
         userDataService = context.getBean("userManager")
-		userDataWebService = context.getBean("userWS")
         loginDataWebService = context.getBean("loginWS")
         metadataWebService = context.getBean("metadataWS")
         organizationService = context.getBean("orgManager")
@@ -178,32 +168,22 @@ public class NroUserReport implements ReportDataSetBuilder {
 				
 				def users = userDataService.getByExample(searchBean, 0, Integer.MAX_VALUE) as List<UserEntity>
 
-				for (UserEntity user : users) {
-					def userId = user.id
-					List<Organization> NroOfficeList = organizationService.getOrganizationsForUserByTypeLocalized(userId, "300", NRO_OFFICE_TYPE_ID, DEFAULT_LANGUAGE)					
-					Map<String,UserAttributeEntity> UserAttributes = user.getUserAttributes()
-					Set<EmailAddressEntity> EmailAddressList = user.getEmailAddresses()					
-					String SecondOfficeId = getUserAttribute(UserAttributes, "Secondary office")					
-					Organization ContractedOffice = NroOfficeList.findAll { it.id != SecondOfficeId }[0]
-					String EmailType = "Default" 
+				for (UserEntity u : users) {
+					def userId = u.id
 					def ReportRow row = new ReportRow()
-					row.column.add(new ReportColumn('FIRST_NAME', user.firstName))
-					row.column.add(new ReportColumn('MIDDLE_INIT', user.middleInit))
-					row.column.add(new ReportColumn('LAST_NAME', user.lastName))
-					row.column.add(new ReportColumn('TITLE', user.title))
-					row.column.add(new ReportColumn('CONTRACTED_OFFICE', getOfficeNamesByOfficeId(ContractedOffice.id)))
-					row.column.add(new ReportColumn('SECONDARY_OFFICE', getOfficeNamesByOfficeId(SecondOfficeId)))
-					row.column.add(new ReportColumn('STATUS', user.status?.value))
-					row.column.add(new ReportColumn('EMPLOYEE_TYPE', user.getEmployeeType()?.description))
-					row.column.add(new ReportColumn('EMPLOYEE_ID', user.employeeId))
-					row.column.add(new ReportColumn('EMAIL_ADDRESS', getEmail(EmailAddressList, EmailType)))
+					row.column.add(new ReportColumn('FIRST_NAME', u.firstName))
+					row.column.add(new ReportColumn('MIDDLE_INIT', u.middleInit))
+					row.column.add(new ReportColumn('LAST_NAME', u.lastName))
+					row.column.add(new ReportColumn('TITLE', u.title))
+					row.column.add(new ReportColumn('COMPANY_NAME', getCompanyNamesByUserId(userId)))
+					row.column.add(new ReportColumn('STATUS', u.status?.value))
+					row.column.add(new ReportColumn('EMPLOYEE_ID', u.employeeId))
+					row.column.add(new ReportColumn('EMAIL_ADDRESS', getDefaultEmail(userId)?.replaceAll('@', ' @')))
 					row.column.add(new ReportColumn('PHONE', getDefaultPhone(userId)))
-					row.column.add(new ReportColumn('CAMPAIGN', getUserAttribute(UserAttributes, "Campaign")))
-					row.column.add(new ReportColumn('SKYPE', getUserAttribute(UserAttributes, "Skype")))
 					Login l = loginDataWebService.getPrimaryIdentity(userId)?.principal
 					row.column.add(new ReportColumn('LAST_LOGIN', l?.lastLogin ? dateFormat.format(l.lastLogin) : null))
 					row.column.add(new ReportColumn('LOGIN', l?.login))
-					row.column.add(new ReportColumn('MANAGER', getSupervisorNameyUserId(userId)))
+
 					reportTable.row.add(row)
 				}
 			}
@@ -225,55 +205,26 @@ public class NroUserReport implements ReportDataSetBuilder {
 			for(def String orgId : organizationIds) {
 				def Organization organization = organizationService.getOrganizationLocalized(orgId, null, language)
 				if (organization?.organizationTypeId) {
-					if (organization.organizationTypeId != NRO_TYPE_ID) {
-						violations.add "Only NRO offices are accepted for parameter 'NRO'. ${organization.name} is not an NRO."
+					if (organization.organizationTypeId != NRO_OFFICE_TYPE_ID) {
+						violations.add "Only NRO offices are accepted for parameter 'NRO office'. ${organization.name} is not and NRO Office."
 					}
 				}
 			}
-		} 
+		}
 		println("=== $ScriptName violations: $violations")
 		return violations
 	}
 
     private MetadataWebService metadataWebService
-	
 
-	private String getUserAttribute(Map<String,UserAttributeEntity> UserAttributes, String AttributeName) {
-		def UserAttributeValue = UserAttributes?.get(AttributeName)?.value
-		return UserAttributeValue
-		}
-
-	private String getOfficeNamesByOfficeId(String NroOfficeId) {
-		println("=== $ScriptName getOfficeNamesByOfficeId: NroOfficeId: $NroOfficeId")
-		if (NroOfficeId) {
-			Organization NroOffice = organizationService.getOrganizationLocalized(NroOfficeId, DEFAULT_REQUESTER_ID, DEFAULT_LANGUAGE)
-			List<Organization> Nro = organizationService.getParentOrganizationsLocalized(NroOfficeId, DEFAULT_REQUESTER_ID, 0, 1, DEFAULT_LANGUAGE)			
-			String NroName = Nro.get(0).name
-			String OfficeName = NroOffice.name
-			return NroName + "\n" + OfficeName
-		} else {
-			return ""
-		}
-	}
-	
     private String getCompanyNamesByUserId(String userId) {
-        def orgs = organizationService.getOrganizationsForUser(userId, DEFAULT_REQUESTER_ID, 0, 100) as List<Organization>
+        def orgs = organizationService.getOrganizationsForUser(userId, "3000", 0, 100) as List<Organization>
         orgs.sort(true, { a,b -> a.id <=> b.id })
         def result = []
         orgs.each { result += it.abbreviation ?: it.name }
         return result.join(', ')
     }
 
-	private String getSupervisorNameyUserId(String userId) {
-	def superiors = userDataWebService.getSuperiors(userId, 0, Integer.MAX_VALUE)
-		if (superiors) {
-			def supervisor = superiors.get(0)
-			def Accounts = userDataWebService.findBeans(new UserSearchBean(key: supervisor.id), 0, 1)
-			def supervisorAccount = Accounts ? Accounts.get(0) : null
-			def supervisorName = supervisorAccount.firstName + " " +supervisorAccount.lastName
-			return supervisorName
-		}
-	}
     private ReportTable listValues(String parameter) {
 
         ReportTable reportTable = new ReportTable()
@@ -344,23 +295,6 @@ public class NroUserReport implements ReportDataSetBuilder {
         return ''
     }
 
-	private String getEmail( Set<EmailAddressEntity> EmailAddressList, String EmailType) {
-		def EmailAddress = ""
-		if (EmailAddressList) {
-			switch (EmailType){
-				case "Default" :
-					EmailAddress =  EmailAddressList.find{it.getIsDefault()}.getEmailAddress() ?: "Not Default Email Set"
-					break
-				default:
-					EmailAddress = EmailAddressList[0].getEmailAddress()
-				break
-			}
-		} else {
-			EmailAddress = "Account has no Emaill Address"
-		}
-		return EmailAddress
-	}
-	
     private String getDefaultEmail(String userId) {
         def emails = userDataService.getEmailAddressList(new EmailSearchBean(parentId: userId), 100, 0) as List<EmailAddressEntity>
         return emails ? emails.sort(true, { a,b -> a.isDefault <=> b.isDefault }).get(0).emailAddress : ''
