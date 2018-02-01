@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
-    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130917-1035></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.5.0.v201506092134 Build &lt;@BUILD@></property>
     <simple-property-list name="includeResource">
         <value>resources/NroUserReport</value>
         <value>resources/NroUserReport_ru</value>
@@ -138,9 +138,9 @@ this.setExtensionProperty("OdaConnProfileStorePath", myresourcefolder + "/config
                     <text-property name="heading">TITLE</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">COMPANY_NAME</property>
+                    <property name="columnName">CONTRACTED_OFFICE</property>
                     <property name="analysis">dimension</property>
-                    <text-property name="heading">COMPANY_NAME</text-property>
+                    <text-property name="heading">CONTRACTED_OFFICE</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">STATUS</property>
@@ -173,9 +173,34 @@ this.setExtensionProperty("OdaConnProfileStorePath", myresourcefolder + "/config
                     <text-property name="heading">PHONE</text-property>
                 </structure>
                 <structure>
+                    <property name="columnName">MANAGER</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">MANAGER</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SKYPE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">SKYPE</text-property>
+                </structure>
+                <structure>
                     <property name="columnName">ERROR</property>
                     <property name="analysis">dimension</property>
                     <text-property name="heading">ERROR</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">EMPLOYEE_TYPE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">EMPLOYEE_TYPE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CAMPAIGN</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">CAMPAIGN</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SECONDARY_OFFICE</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">SECONDARY_OFFICE</text-property>
                 </structure>
             </list-property>
             <list-property name="parameters">
@@ -248,7 +273,7 @@ this.setExtensionProperty("OdaConnProfileStorePath", myresourcefolder + "/config
                     </structure>
                     <structure>
                         <property name="position">5</property>
-                        <property name="name">COMPANY_NAME</property>
+                        <property name="name">CONTRACTED_OFFICE</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
@@ -283,7 +308,32 @@ this.setExtensionProperty("OdaConnProfileStorePath", myresourcefolder + "/config
                     </structure>
                     <structure>
                         <property name="position">12</property>
+                        <property name="name">MANAGER</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">SKYPE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
                         <property name="name">ERROR</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">EMPLOYEE_TYPE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">CAMPAIGN</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">SECONDARY_OFFICE</property>
                         <property name="dataType">string</property>
                     </structure>
                 </list-property>
@@ -320,8 +370,8 @@ this.setExtensionProperty("OdaConnProfileStorePath", myresourcefolder + "/config
                 </structure>
                 <structure>
                     <property name="position">5</property>
-                    <property name="name">COMPANY_NAME</property>
-                    <property name="nativeName">COMPANY_NAME</property>
+                    <property name="name">CONTRACTED_OFFICE</property>
+                    <property name="nativeName">CONTRACTED_OFFICE</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
@@ -369,8 +419,43 @@ this.setExtensionProperty("OdaConnProfileStorePath", myresourcefolder + "/config
                 </structure>
                 <structure>
                     <property name="position">12</property>
+                    <property name="name">MANAGER</property>
+                    <property name="nativeName">MANAGER</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">SKYPE</property>
+                    <property name="nativeName">SKYPE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
                     <property name="name">ERROR</property>
                     <property name="nativeName">ERROR</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">EMPLOYEE_TYPE</property>
+                    <property name="nativeName">EMPLOYEE_TYPE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">CAMPAIGN</property>
+                    <property name="nativeName">CAMPAIGN</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">SECONDARY_OFFICE</property>
+                    <property name="nativeName">SECONDARY_OFFICE</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
@@ -500,7 +585,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
         <design:resultColumnDefinitions>
           <design:attributes>
             <design:identifier>
-              <design:name>COMPANY_NAME</design:name>
+              <design:name>CONTRACTED_OFFICE</design:name>
               <design:position>5</design:position>
             </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
@@ -509,7 +594,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
             <design:nullability>Unknown</design:nullability>
           </design:attributes>
           <design:usageHints>
-            <design:label>COMPANY_NAME</design:label>
+            <design:label>CONTRACTED_OFFICE</design:label>
             <design:formattingHints/>
           </design:usageHints>
         </design:resultColumnDefinitions>
@@ -633,7 +718,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
             <list-property name="privateDriverProperties">
                 <ex-property>
                     <name>xmlQueryText</name>
-                    <value>table0#-TNAME-#table0#:#[/soap:Envelope/soap:Body/ns2:executeQueryResponse/return/ReportData/ns2:reportTable[@name='NroUserReport']/row]#:#{FIRST_NAME;STRING;/column[@name='FIRST_NAME']/value},{MIDDLE_INIT;STRING;/column[@name='MIDDLE_INIT']/value},{LAST_NAME;STRING;/column[@name='LAST_NAME']/value},{TITLE;STRING;/column[@name='TITLE']/value},{COMPANY_NAME;STRING;/column[@name='COMPANY_NAME']/value},{STATUS;STRING;/column[@name='STATUS']/value},{EMPLOYEE_ID;STRING;/column[@name='EMPLOYEE_ID']/value},{EMAIL_ADDRESS;STRING;/column[@name='EMAIL_ADDRESS']/value},{LAST_LOGIN;STRING;/column[@name='LAST_LOGIN']/value},{LOGIN;STRING;/column[@name='LOGIN']/value},{PHONE;STRING;/column[@name='PHONE']/value},{ERROR;STRING;/column[@name='ERROR']/value}#:#&lt;"ns2","urn:idm.openiam.org%srvc%report%service";"soap","http:%%schemas.xmlsoap.org%soap%envelope%"></value>
+                    <value>table0#-TNAME-#table0#:#[/soap:Envelope/soap:Body/ns2:executeQueryResponse/return/ReportData/ns2:reportTable[@name='NroUserReport']/row]#:#{FIRST_NAME;STRING;/column[@name='FIRST_NAME']/value},{MIDDLE_INIT;STRING;/column[@name='MIDDLE_INIT']/value},{LAST_NAME;STRING;/column[@name='LAST_NAME']/value},{TITLE;STRING;/column[@name='TITLE']/value},{CONTRACTED_OFFICE;STRING;/column[@name='CONTRACTED_OFFICE']/value},{STATUS;STRING;/column[@name='STATUS']/value},{EMPLOYEE_ID;STRING;/column[@name='EMPLOYEE_ID']/value},{EMAIL_ADDRESS;STRING;/column[@name='EMAIL_ADDRESS']/value},{LAST_LOGIN;STRING;/column[@name='LAST_LOGIN']/value},{LOGIN;STRING;/column[@name='LOGIN']/value},{PHONE;STRING;/column[@name='PHONE']/value},{MANAGER;STRING;/column[@name='MANAGER']/value},{SKYPE;STRING;/column[@name='SKYPE']/value},{ERROR;STRING;/column[@name='ERROR']/value},{EMPLOYEE_TYPE;STRING;/column[@name='EMPLOYEE_TYPE']/value},{CAMPAIGN;STRING;/column[@name='CAMPAIGN']/value},{SECONDARY_OFFICE;STRING;/column[@name='SECONDARY_OFFICE']/value}#:#&lt;"ns2","urn:idm.openiam.org%srvc%report%service";"soap","http:%%schemas.xmlsoap.org%soap%envelope%"></value>
                 </ex-property>
                 <ex-property>
                     <name>operationTrace</name>
@@ -908,7 +993,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
         <design:resultColumnDefinitions>
           <design:attributes>
             <design:identifier>
-              <design:name>COMPANY_NAME</design:name>
+              <design:name>CONTRACTED_OFFICE</design:name>
               <design:position>5</design:position>
             </design:identifier>
             <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
@@ -917,7 +1002,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
             <design:nullability>Unknown</design:nullability>
           </design:attributes>
           <design:usageHints>
-            <design:label>COMPANY_NAME</design:label>
+            <design:label>CONTRACTED_OFFICE</design:label>
             <design:formattingHints/>
           </design:usageHints>
         </design:resultColumnDefinitions>
@@ -1867,9 +1952,9 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
-                    <property name="name">COMPANY_NAME</property>
-                    <text-property name="displayName">COMPANY_NAME</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["COMPANY_NAME"]</expression>
+                    <property name="name">CONTRACTED_OFFICE</property>
+                    <text-property name="displayName">CONTRACTED_OFFICE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CONTRACTED_OFFICE"]</expression>
                     <property name="dataType">string</property>
                 </structure>
                 <structure>
@@ -1945,6 +2030,36 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                     <property name="dataType">string</property>
                     <property name="allowExport">true</property>
                 </structure>
+                <structure>
+                    <property name="name">SKYPE</property>
+                    <text-property name="displayName">SKYPE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["SKYPE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">MANAGER</property>
+                    <text-property name="displayName">MANAGER</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["MANAGER"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">EMPLOYEE_TYPE</property>
+                    <text-property name="displayName">EMPLOYEE_TYPE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["EMPLOYEE_TYPE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">SECONDARY_OFFICE</property>
+                    <text-property name="displayName">SECONDARY_OFFICE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["SECONDARY_OFFICE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CAMPAIGN</property>
+                    <text-property name="displayName">CAMPAIGN</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CAMPAIGN"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
             </list-property>
             <list-property name="sort">
                 <structure>
@@ -1962,6 +2077,12 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
             <column id="71">
                 <property name="width">16%</property>
             </column>
+            <column id="1986">
+                <property name="width">16%</property>
+            </column>
+            <column id="1977">
+                <property name="width">8%</property>
+            </column>
             <column id="72">
                 <property name="width">8%</property>
             </column>
@@ -1970,6 +2091,15 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
             </column>
             <column id="73">
                 <property name="width">18%</property>
+            </column>
+            <column id="1959">
+                <property name="width">18%</property>
+            </column>
+            <column id="1993">
+                <property name="width">18%</property>
+            </column>
+            <column id="1968">
+                <property name="width">10%</property>
             </column>
             <column id="74">
                 <property name="width">10%</property>
@@ -1986,7 +2116,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                         </structure>
                     </list-property>
                     <cell id="379">
-                        <property name="colSpan">8</property>
+                        <property name="colSpan">13</property>
                         <property name="rowSpan">1</property>
                         <property name="backgroundColor">white</property>
                         <property name="textAlign">left</property>
@@ -2029,6 +2159,20 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             <text-property name="text" key="table.col.company">Company</text-property>
                         </label>
                     </cell>
+                    <cell id="1981">
+                        <property name="style">header-cell</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <label id="1995">
+                            <text-property name="text">Secondary Office</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1972">
+                        <property name="style">header-cell</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <label id="1978">
+                            <text-property name="text">Employee Type</text-property>
+                        </label>
+                    </cell>
                     <cell id="360">
                         <property name="style">header-cell</property>
                         <property name="whiteSpace">nowrap</property>
@@ -2048,6 +2192,27 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                         <property name="whiteSpace">nowrap</property>
                         <label id="29">
                             <text-property name="text" key="table.col.email">eMail</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1954">
+                        <property name="style">header-cell</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <label id="1960">
+                            <text-property name="text">Skype</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1988">
+                        <property name="style">header-cell</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <label id="1994">
+                            <text-property name="text">Campaign</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1963">
+                        <property name="style">header-cell</property>
+                        <property name="whiteSpace">nowrap</property>
+                        <label id="1969">
+                            <text-property name="text">Manager</text-property>
                         </label>
                     </cell>
                     <cell id="362">
@@ -2082,7 +2247,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             </structure>
                         </list-property>
                         <cell id="365">
-                            <property name="colSpan">8</property>
+                            <property name="colSpan">13</property>
                             <property name="rowSpan">1</property>
                             <property name="borderBottomStyle">solid</property>
                             <property name="borderBottomWidth">1px</property>
@@ -2139,6 +2304,14 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             <property name="borderBottomStyle">solid</property>
                             <property name="borderBottomWidth">1px</property>
                         </cell>
+                        <cell id="1984">
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                        </cell>
+                        <cell id="1975">
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                        </cell>
                         <cell id="382">
                             <property name="borderBottomStyle">solid</property>
                             <property name="borderBottomWidth">1px</property>
@@ -2148,6 +2321,18 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             <property name="borderBottomWidth">1px</property>
                         </cell>
                         <cell id="383">
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                        </cell>
+                        <cell id="1957">
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                        </cell>
+                        <cell id="1991">
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">1px</property>
+                        </cell>
+                        <cell id="1966">
                             <property name="borderBottomStyle">solid</property>
                             <property name="borderBottomWidth">1px</property>
                         </cell>
@@ -2186,7 +2371,20 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                     <cell id="43">
                         <property name="style">details-cell</property>
                         <data id="44">
-                            <property name="resultSetColumn">COMPANY_NAME</property>
+                            <property name="resultSetColumn">CONTRACTED_OFFICE</property>
+                        </data>
+                    </cell>
+                    <cell id="1983">
+                        <property name="style">details-cell</property>
+                        <data id="1996">
+                            <property name="resultSetColumn">SECONDARY_OFFICE</property>
+                        </data>
+                    </cell>
+                    <cell id="1974">
+                        <property name="style">details-cell</property>
+                        <property name="textAlign">center</property>
+                        <data id="1979">
+                            <property name="resultSetColumn">EMPLOYEE_TYPE</property>
                         </data>
                     </cell>
                     <cell id="47">
@@ -2220,6 +2418,24 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                             </list-property>
                         </data>
                     </cell>
+                    <cell id="1956">
+                        <property name="style">details-cell</property>
+                        <data id="1961">
+                            <property name="resultSetColumn">SKYPE</property>
+                        </data>
+                    </cell>
+                    <cell id="1990">
+                        <property name="style">details-cell</property>
+                        <data id="1997">
+                            <property name="resultSetColumn">CAMPAIGN</property>
+                        </data>
+                    </cell>
+                    <cell id="1965">
+                        <property name="style">details-cell</property>
+                        <data id="1970">
+                            <property name="resultSetColumn">MANAGER</property>
+                        </data>
+                    </cell>
                     <cell id="51">
                         <property name="style">details-cell</property>
                         <data id="52">
@@ -2245,7 +2461,7 @@ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                         </structure>
                     </list-property>
                     <cell id="57">
-                        <property name="colSpan">8</property>
+                        <property name="colSpan">13</property>
                         <property name="rowSpan">1</property>
                         <property name="paddingTop">8pt</property>
                         <property name="paddingLeft">8pt</property>
