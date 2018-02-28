@@ -37,7 +37,7 @@ import com.google.gdata.data.appsforyourdomain.EmailList
 
 import java.text.*
 
-public class NroUserReport implements ReportDataSetBuilder {
+public class GpUserReport implements ReportDataSetBuilder {
 
 	static final String DEFAULT_REQUESTER_ID = "3000"
 	static final Language DEFAULT_LANGUAGE = new Language(id:  1)
@@ -45,7 +45,7 @@ public class NroUserReport implements ReportDataSetBuilder {
     static final String SEC_STATUS_META_GROUP = "USER_2ND_STATUS"
 	static final String NRO_TYPE_ID = "402894ad50f651a10150f66501410049"
 	static final String NRO_OFFICE_TYPE_ID = "402894ad50f651a10150f665d78f004e"
-	static final String ScriptName = "NroUserReport.groovy"
+	static final String ScriptName = "GpUserReport.groovy"
 
     private ApplicationContext context
     private UserDataService userDataService
@@ -137,7 +137,7 @@ public class NroUserReport implements ReportDataSetBuilder {
             reportTable.row.add(row)
 
         } else {
-			reportTable.setName("NroUserReport")
+			reportTable.setName("GpUserReport")
 			
 			def messages = validateParameters(organizations, roles, status, secStatus)
 			println("=== $ScriptName validateParameters, responce: $messages")
