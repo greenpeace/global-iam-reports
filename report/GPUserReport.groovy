@@ -218,19 +218,7 @@ public class GpUserReport implements ReportDataSetBuilder {
 	}
 	
 	private validateParameters(String[] organizationIds, String[] roles, String status, String secStatus) {
-		def violations = [] as List
-		if (EmptyMultiValue(organizationIds)) {
-			violations.add "Parameter 'NRO office' is required"
-		} else {
-			for(def String orgId : organizationIds) {
-				def Organization organization = organizationService.getOrganizationLocalized(orgId, null, language)
-				if (organization?.organizationTypeId) {
-					if (organization.organizationTypeId != NRO_TYPE_ID) {
-						violations.add "Only NRO offices are accepted for parameter 'NRO'. ${organization.name} is not an NRO."
-					}
-				}
-			}
-		} 
+		def violations = [] as List 
 		println("=== $ScriptName violations: $violations")
 		return violations
 	}
