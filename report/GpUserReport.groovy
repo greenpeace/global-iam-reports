@@ -45,7 +45,7 @@ public class GpUserReport implements ReportDataSetBuilder {
     static final String SEC_STATUS_META_GROUP = "USER_2ND_STATUS"
 	static final String NRO_TYPE_ID = "402894ad50f651a10150f66501410049"
 	static final String NRO_OFFICE_TYPE_ID = "402894ad50f651a10150f665d78f004e"
-	static final String ScriptName = "GpUserReport.groovy"
+	static final String ScriptName = "GpUserReport"
 
     private ApplicationContext context
     private UserDataService userDataService
